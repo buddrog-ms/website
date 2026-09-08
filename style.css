@@ -544,8 +544,30 @@ body {
     letter-spacing: 0.8px;
 }
 
+.gallery-info-button {
+    display: none;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 50%;
+    background: rgba(37,42,46,0.8);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    z-index: 5;
+    cursor: pointer;
+}
+
 /* Mobile: overlay zawsze widoczny gdy active */
 @media (max-width: 767px) {
+    .gallery-info-button { display: flex; }
+
     .slide-overlay {
         transform: translateY(0) !important;
         opacity: 1;
