@@ -564,8 +564,10 @@
     <div class="section projects-section" id="projects">
         <h2>Wybrane realizacje</h2>
         <p class="projects-intro">Szczegóły naszych realizacji, zakres prac i dokumentacja projektowa.</p>
-        <div class="projects-grid">
-            <a class="project-card-link" href="project.html?id=modernizacja-drog">
+        <div class="swiper projects-swiper">
+            <div class="swiper-wrapper projects-grid">
+                <div class="swiper-slide">
+                    <a class="project-card-link" href="project.html?id=modernizacja-drog">
                 <article class="project-card">
                 <img src="images/project1.jpg" alt="brak opisu">
                 <div class="project-card-content">
@@ -578,8 +580,10 @@
                     <p class="project-description">Materiał poglądowy - szczegóły realizacji zostaną uzupełnione.</p>
                 </div>
                 </article>
-            </a>
-            <a class="project-card-link" href="project.html?id=odsniezanie">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a class="project-card-link" href="project.html?id=odsniezanie">
                 <article class="project-card">
                 <img src="images/dummy-odsniezanie-01.jpg" alt="brak opisu">
                 <div class="project-card-content">
@@ -592,8 +596,10 @@
                     <p class="project-description">Materiał poglądowy - szczegóły realizacji zostaną uzupełnione.</p>
                 </div>
                 </article>
-            </a>
-            <a class="project-card-link" href="project.html?id=rozbiorka-budynkow">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a class="project-card-link" href="project.html?id=rozbiorka-budynkow">
                 <article class="project-card">
                 <img src="images/dummy-rozbiorka-01.jpg" alt="brak opisu">
                 <div class="project-card-content">
@@ -606,7 +612,12 @@
                     <p class="project-description">Materiał poglądowy - szczegóły realizacji zostaną uzupełnione.</p>
                 </div>
                 </article>
-            </a>
+                    </a>
+                </div>
+            </div>
+            <div class="swiper-pagination projects-pagination"></div>
+            <div class="swiper-button-prev projects-button-prev"></div>
+            <div class="swiper-button-next projects-button-next"></div>
         </div>
     </div>
 
@@ -718,6 +729,34 @@
                         slidesPerView: 3,
                         spaceBetween: 24,
                         grid: { rows: 2, fill: 'row' }
+                    }
+                }
+            });
+
+            const projectsSwiper = new Swiper('.projects-swiper', {
+                slidesPerView: 3,
+                spaceBetween: 24,
+                watchOverflow: true,
+                pagination: {
+                    el: '.projects-pagination',
+                    clickable: true
+                },
+                navigation: {
+                    nextEl: '.projects-button-next',
+                    prevEl: '.projects-button-prev'
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 16
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 20
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 24
                     }
                 }
             });
