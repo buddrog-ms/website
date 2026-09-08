@@ -393,6 +393,27 @@ body {
     box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
+.project-card-link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.project-card-link:hover .project-card {
+    border-color: var(--brand-yellow);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.14);
+    transform: translateY(-4px);
+}
+
+.project-card {
+    transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+.project-card-link:focus-visible {
+    outline: 3px solid var(--brand-yellow);
+    outline-offset: 4px;
+}
+
 .project-card > img {
     width: 100%;
     height: 220px;
@@ -1048,4 +1069,155 @@ body { background-color: #f4f3ef; color: #202326; }
 
 @media (max-width: 768px) {
     .nav-menu a:hover { border-left-color: var(--brand-yellow); background-color: var(--brand-yellow-soft); }
+}
+
+/* ─── PROJECT DETAIL PAGE ───────────────────────────── */
+.project-page {
+    min-height: 100vh;
+}
+
+.project-back-link,
+.project-detail-back {
+    color: var(--brand-yellow-dark);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.project-back-link:hover,
+.project-detail-back:hover {
+    text-decoration: underline;
+}
+
+.project-detail {
+    padding: 56px 0 80px;
+}
+
+.project-detail-header {
+    max-width: 760px;
+    margin: 32px 0 48px;
+}
+
+.project-detail-header h1 {
+    color: var(--brand-graphite);
+    font-size: 44px;
+    line-height: 1.15;
+    margin: 8px 0 16px;
+}
+
+.project-detail-header p {
+    color: #4b5563;
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.project-detail-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.75fr);
+    gap: 40px;
+    align-items: start;
+}
+
+.project-detail-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.project-detail-image-link {
+    display: block;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.project-detail-image-link:first-child {
+    grid-column: 1 / -1;
+}
+
+.project-detail-image-link img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.35s ease;
+}
+
+.project-detail-image-link:first-child img {
+    height: 420px;
+}
+
+.project-detail-image-link:hover img {
+    transform: scale(1.03);
+}
+
+.project-detail-info {
+    background: #fff;
+    border-top: 4px solid var(--brand-yellow);
+    padding: 28px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.project-detail-info h2 {
+    color: var(--brand-graphite);
+    font-size: 22px;
+    margin: 0 0 24px;
+}
+
+.project-detail-list {
+    display: grid;
+    gap: 16px;
+    margin: 0 0 24px;
+}
+
+.project-detail-list div {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.project-detail-list dt {
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.project-detail-list dd,
+.project-detail-info > p {
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.project-contact-button {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 12px 18px;
+    background: var(--brand-yellow);
+    color: var(--brand-graphite);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.project-contact-button:hover {
+    background: var(--brand-yellow-dark);
+}
+
+@media (max-width: 768px) {
+    .project-back-link { font-size: 13px; }
+    .project-detail { padding: 32px 0 56px; }
+    .project-detail-header { margin: 24px 0 32px; }
+    .project-detail-header h1 { font-size: 32px; }
+    .project-detail-header p { font-size: 16px; }
+    .project-detail-layout { grid-template-columns: 1fr; gap: 24px; }
+    .project-detail-gallery { grid-template-columns: 1fr; }
+    .project-detail-image-link:first-child { grid-column: auto; }
+    .project-detail-image-link img,
+    .project-detail-image-link:first-child img { height: 240px; }
 }
