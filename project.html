@@ -88,15 +88,16 @@
 
         const pathParts = window.location.pathname.split('/').filter(Boolean);
         const queryId = new URLSearchParams(window.location.search).get('id');
-        const projectId = pathParts[0] === 'project' ? pathParts[1] : queryId;
+        const pathId = pathParts[0] === 'project' ? pathParts[1] : null;
+        const projectId = queryId || pathId || 'modernizacja-drog';
         const project = projects[projectId] || projects['modernizacja-drog'];
-        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && projectId) {
+        if (!queryId && pathId && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
             window.history.replaceState({}, '', `/project/${encodeURIComponent(projectId)}`);
         }
         document.title = `${project.category} - Mar-Buddróg`;
         document.querySelector('meta[name="description"]').setAttribute('content', `${project.category} - realizacja firmy Mar-Buddróg`);
         const canonicalUrl = document.querySelector('link[rel="canonical"]');
-        canonicalUrl.href = `https://buddrog.pl/project/${encodeURIComponent(projectId || 'modernizacja-drog')}`;
+        canonicalUrl.href = `https://buddrog.pl/project/${encodeURIComponent(projectId)}`;
         document.getElementById('project-category').textContent = project.category;
         document.getElementById('project-title').textContent = project.title;
         document.getElementById('project-summary').textContent = project.summary;
