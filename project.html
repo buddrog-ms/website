@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Szczegóły realizacji Mar-Buddróg">
     <title>Realizacja - Mar-Buddróg</title>
+    <link rel="canonical" href="https://buddrog.pl/project">
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="project-page">
     <div class="navbar" id="home">
         <div class="container navbar-inner">
-            <a href="index.html" class="logo">
+            <a href="/" class="logo">
                 <span class="logo-main">Mar-Buddróg</span>
                 <span class="logo-sub">Budownictwo drogowe</span>
             </a>
-            <a href="index.html#projects" class="project-back-link">Wróć do realizacji</a>
+            <a href="/#projects" class="project-back-link">Wróć do realizacji</a>
         </div>
     </div>
 
     <main class="project-detail">
         <div class="container">
-            <a href="index.html#projects" class="project-detail-back">&larr; Wszystkie realizacje</a>
+            <a href="/#projects" class="project-detail-back">&larr; Wszystkie realizacje</a>
             <div class="project-detail-header">
                 <span class="project-category" id="project-category">brak opisu</span>
                 <h1 id="project-title">brak opisu</h1>
@@ -37,7 +38,7 @@
                         <div><dt>Dokumentacja</dt><dd id="project-documents">brak opisu</dd></div>
                     </dl>
                     <p id="project-description">brak opisu</p>
-                    <a class="project-contact-button" href="index.html#contact">Zapytaj o realizację</a>
+                    <a class="project-contact-button" href="/#contact">Zapytaj o realizację</a>
                 </aside>
             </div>
         </div>
@@ -85,6 +86,9 @@
 
         const project = projects[new URLSearchParams(window.location.search).get('id')] || projects['modernizacja-drog'];
         document.title = `${project.category} - Mar-Buddróg`;
+        document.querySelector('meta[name="description"]').setAttribute('content', `${project.category} - realizacja firmy Mar-Buddróg`);
+        const canonicalUrl = document.querySelector('link[rel="canonical"]');
+        canonicalUrl.href = `https://buddrog.pl/project?id=${encodeURIComponent(new URLSearchParams(window.location.search).get('id') || 'modernizacja-drog')}`;
         document.getElementById('project-category').textContent = project.category;
         document.getElementById('project-title').textContent = project.title;
         document.getElementById('project-summary').textContent = project.summary;
