@@ -7,6 +7,7 @@
     <title>Realizacja - Mar-Buddróg</title>
     <link rel="canonical" href="https://buddrog.pl/project">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 </head>
 <body class="project-page">
     <div class="navbar" id="home">
@@ -30,7 +31,15 @@
             </div>
 
             <div class="project-detail-layout">
-                <section class="project-detail-gallery" aria-label="Galeria realizacji" id="project-gallery"></section>
+                <section class="project-detail-gallery" aria-label="Galeria realizacji">
+                    <div class="swiper project-swiper">
+                        <div class="swiper-wrapper" id="project-gallery"></div>
+                        <button class="swiper-button-prev" type="button" aria-label="Poprzednie zdjęcie"></button>
+                        <button class="swiper-button-next" type="button" aria-label="Następne zdjęcie"></button>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <p class="project-image-counter" aria-live="polite"><span id="project-image-current">1</span> / <span id="project-image-total">1</span></p>
+                </section>
                 <aside class="project-detail-info">
                     <h2>Informacje o realizacji</h2>
                     <dl class="project-detail-list">
@@ -51,6 +60,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
         const projects = {
             'modernizacja-drog': {
@@ -111,6 +121,9 @@
 
         const gallery = document.getElementById('project-gallery');
         project.images.forEach(function(image, index) {
+            const slide = document.createElement('div');
+            slide.className = 'swiper-slide';
+
             const link = document.createElement('a');
             link.href = image;
             link.target = '_blank';
@@ -122,7 +135,29 @@
             imageElement.src = image;
             imageElement.alt = 'brak opisu';
             link.appendChild(imageElement);
-            gallery.appendChild(link);
+            slide.appendChild(link);
+            gallery.appendChild(slide);
+        });
+
+        document.getElementById('project-image-total').textContent = project.images.length;
+        new Swiper('.project-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 16,
+            grabCursor: true,
+            keyboard: { enabled: true },
+            pagination: {
+                el: '.project-swiper .swiper-pagination',
+                clickable: true
+            },
+            navigation: {
+                nextEl: '.project-swiper .swiper-button-next',
+                prevEl: '.project-swiper .swiper-button-prev'
+            },
+            on: {
+                slideChange: function(swiper) {
+                    document.getElementById('project-image-current').textContent = swiper.realIndex + 1;
+                }
+            }
         });
     </script>
 </body>
