@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bud-drogi.pl/</loc>
-    <lastmod>2024-09-07</lastmod>
+    <loc>https://buddrog.pl/</loc>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://bud-drogi.pl/#about</loc>
-    <lastmod>2024-09-07</lastmod>
-    <changefreq>yearly</changefreq>
+    <loc>https://buddrog.pl/project/modernizacja-drog</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bud-drogi.pl/#gallery</loc>
-    <lastmod>2024-09-07</lastmod>
-    <changefreq>quarterly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://buddrog.pl/project/odsniezanie</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bud-drogi.pl/#contact</loc>
-    <lastmod>2024-09-07</lastmod>
-    <changefreq>yearly</changefreq>
+    <loc>https://buddrog.pl/project/rozbiorka-budynkow</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>

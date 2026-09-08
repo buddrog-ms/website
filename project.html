@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Szczegóły realizacji Mar-Buddróg">
+    <title>Realizacja - Mar-Buddróg</title>
+    <link rel="canonical" href="https://buddrog.pl/project">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="project-page">
+    <div class="navbar" id="home">
+        <div class="container navbar-inner">
+            <a href="/" class="logo">
+                <span class="logo-main">Mar-Buddróg</span>
+                <span class="logo-sub">Budownictwo drogowe</span>
+            </a>
+            <a href="/#projects" class="project-back-link">Wróć do realizacji</a>
+        </div>
+    </div>
+
+    <main class="project-detail">
+        <div class="container">
+            <a href="/#projects" class="project-detail-back">&larr; Wszystkie realizacje</a>
+            <div class="project-detail-header">
+                <span class="project-category" id="project-category">brak opisu</span>
+                <h1 id="project-title">brak opisu</h1>
+                <p id="project-summary">brak opisu</p>
+                <p class="project-gallery-note" id="project-gallery-note">Materiały poglądowe.</p>
+            </div>
+
+            <div class="project-detail-layout">
+                <section class="project-detail-gallery" aria-label="Galeria realizacji" id="project-gallery"></section>
+                <aside class="project-detail-info">
+                    <h2>Informacje o realizacji</h2>
+                    <dl class="project-detail-list">
+                        <div><dt>Lokalizacja</dt><dd id="project-location">brak opisu</dd></div>
+                        <div><dt>Zakres prac</dt><dd id="project-scope">brak opisu</dd></div>
+                        <div><dt>Dokumentacja</dt><dd id="project-documents">brak opisu</dd></div>
+                    </dl>
+                    <p id="project-description">brak opisu</p>
+                    <a class="project-contact-button" href="/#contact">Zapytaj o realizację</a>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 1998-2024 Mar-Buddróg. Wszelkie prawa zastrzeżone.</p>
+        </div>
+    </footer>
+
+    <script>
+        const projects = {
+            'modernizacja-drog': {
+                category: 'Modernizacja dróg',
+                title: 'Przykładowa modernizacja drogi',
+                summary: 'Materiał poglądowy prezentujący typowy zakres prac przy modernizacji drogi.',
+                location: 'Do uzupełnienia',
+                scope: 'Prace drogowe i przygotowanie terenu',
+                documents: 'Do uzupełnienia',
+                description: 'Przykładowy zakres może obejmować przygotowanie podłoża, modernizację nawierzchni, transport materiałów sypkich oraz uporządkowanie terenu po zakończeniu robót. Szczegóły lokalizacji, parametrów i dokumentacji zostaną uzupełnione po dodaniu rzeczywistej realizacji.',
+                imageNote: 'Zdjęcia poglądowe - nie przedstawiają dokumentacji konkretnej realizacji.',
+                images: ['images/project1.jpg', 'images/project2.jpg', 'images/project3.jpg', 'images/project4.jpg', 'images/project5.jpg', 'images/project6.jpg']
+            },
+            odsniezanie: {
+                category: 'Akcja zimowa - odśnieżanie',
+                title: 'Przykładowa akcja zimowa',
+                summary: 'Materiał poglądowy prezentujący organizację prac związanych z odśnieżaniem.',
+                location: 'Do uzupełnienia',
+                scope: 'Odśnieżanie dróg, placów i terenów zewnętrznych',
+                documents: 'Do uzupełnienia',
+                description: 'Przykładowy zakres prac może obejmować odśnieżanie dróg, placów manewrowych, parkingów i innych terenów zewnętrznych. W zależności od warunków prace mogą być prowadzone przy użyciu pługa, ładowarki lub innego sprzętu zimowego. Szczegóły lokalizacji, harmonogramu i dokumentacji zostaną uzupełnione po dodaniu rzeczywistej realizacji.',
+                imageNote: 'Zdjęcia poglądowe - nie przedstawiają dokumentacji konkretnej realizacji.',
+                images: ['images/dummy-odsniezanie-01.jpg', 'images/dummy-odsniezanie-02.jpg', 'images/dummy-odsniezanie-ladowarka.webp', 'images/dummy-odsniezanie-plug.jpg']
+            },
+            'rozbiorka-budynkow': {
+                category: 'Rozbiórka budynków',
+                description: 'Przykładowy zakres prac może obejmować przygotowanie i zabezpieczenie terenu, rozbiórkę budynku przy użyciu odpowiedniego sprzętu, segregację materiałów oraz uporządkowanie miejsca po zakończeniu robót. Szczegóły lokalizacji, harmonogramu i dokumentacji zostaną uzupełnione po dodaniu rzeczywistej realizacji.',
+                imageNote: 'Zdjęcia poglądowe - nie przedstawiają dokumentacji konkretnej realizacji.',
+                title: 'Przykładowa rozbiórka budynku',
+                summary: 'Materiał poglądowy prezentujący typowy przebieg prac rozbiórkowych.',
+                location: 'Do uzupełnienia',
+                scope: 'Rozbiórka budynku i uprzątnięcie terenu',
+                documents: 'Do uzupełnienia',
+                images: ['images/dummy-rozbiorka-01.jpg', 'images/dummy-rozbiorka-02.jpg', 'images/dummy-rozbiorka-dom-01.jpg', 'images/dummy-rozbiorka-dom-02.jpg']
+            }
+        };
+
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
+        const queryId = new URLSearchParams(window.location.search).get('id');
+        const pathId = pathParts[0] === 'project' ? pathParts[1] : null;
+        const projectId = queryId || pathId || 'modernizacja-drog';
+        const project = projects[projectId] || projects['modernizacja-drog'];
+        if (!queryId && pathId && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+            window.history.replaceState({}, '', `/project/${encodeURIComponent(projectId)}`);
+        }
+        document.title = `${project.category} - Mar-Buddróg`;
+        document.querySelector('meta[name="description"]').setAttribute('content', `${project.category} - realizacja firmy Mar-Buddróg`);
+        const canonicalUrl = document.querySelector('link[rel="canonical"]');
+        canonicalUrl.href = `https://buddrog.pl/project/${encodeURIComponent(projectId)}`;
+        document.getElementById('project-category').textContent = project.category;
+        document.getElementById('project-title').textContent = project.title;
+        document.getElementById('project-summary').textContent = project.summary;
+        document.getElementById('project-location').textContent = project.location;
+        document.getElementById('project-scope').textContent = project.scope;
+        document.getElementById('project-documents').textContent = project.documents;
+        document.getElementById('project-description').textContent = project.description;
+        document.getElementById('project-gallery-note').textContent = project.imageNote || 'Materiały poglądowe.';
+
+        const gallery = document.getElementById('project-gallery');
+        project.images.forEach(function(image, index) {
+            const link = document.createElement('a');
+            link.href = image;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.className = 'project-detail-image-link';
+            link.setAttribute('aria-label', `Otwórz zdjęcie ${index + 1}`);
+
+            const imageElement = document.createElement('img');
+            imageElement.src = image;
+            imageElement.alt = 'brak opisu';
+            link.appendChild(imageElement);
+            gallery.appendChild(link);
+        });
+    </script>
+</body>
+</html>

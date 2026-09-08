@@ -1,18 +1,66 @@
 ﻿[
     {
-        "File":  "dummy-odsniezanie-01.jpg",
-        "Source":  "Wikimedia Commons",
-        "Title":  "File:Snow removal work with a truck grader 2021 01.jpg",
-        "License":  "CC BY-SA 4.0",
-        "Author":  "\u003ca href=\"//commons.wikimedia.org/wiki/User:%E6%B5%81%E3%81%97%E3%81%AE\" title=\"User:流しの\"\u003e藤谷良秀(Fujitani Yoshihide)\u003c/a\u003e",
-        "SourceUrl":  "https://commons.wikimedia.org/wiki/File%3ASnow%20removal%20work%20with%20a%20truck%20grader%202021%2001.jpg"
-    },
-    {
         "File":  "dummy-rozbiorka-01.jpg",
         "Source":  "Wikimedia Commons",
         "Title":  "File:Building demolition jaw MD3.jpg",
         "License":  "CC BY-SA 4.0",
         "Author":  "\u003ca href=\"//commons.wikimedia.org/wiki/User:Acroterion\" title=\"User:Acroterion\"\u003eAcroterion\u003c/a\u003e",
         "SourceUrl":  "https://commons.wikimedia.org/wiki/File%3ABuilding%20demolition%20jaw%20MD3.jpg"
+    }
+    ,{
+        "File": "dummy-odsniezanie-02.jpg",
+        "Source": "Wikimedia Commons",
+        "Title": "File:Snow Removal (9482071).jpg",
+        "License": "Public domain",
+        "Author": "U.S. Air Force photo by Kohei Sugisawa",
+        "SourceUrl": "https://commons.wikimedia.org/wiki/File%3ASnow%20Removal%20(9482071).jpg"
+    },
+    {
+        "File": "dummy-odsniezanie-03.jpg",
+        "Source": "Wikimedia Commons",
+        "Title": "File:Rotary snow plow (392dfc9a67634be09ea866851bcde828).jpg",
+        "License": "Public domain",
+        "Author": "Loren Lane (MORA)",
+        "SourceUrl": "https://commons.wikimedia.org/wiki/File%3ARotary%20snow%20plow%20(392dfc9a67634be09ea866851bcde828).jpg"
+    },
+    {
+        "File": "dummy-rozbiorka-02.jpg",
+        "Source": "Wikimedia Commons",
+        "Title": "File:Demolition of house in Shibuya.jpg",
+        "License": "CC0",
+        "Author": "Syced",
+        "SourceUrl": "https://commons.wikimedia.org/wiki/File%3ADemolition%20of%20house%20in%20Shibuya.jpg"
+    },
+    {
+        "File": "dummy-rozbiorka-dom-01.jpg",
+        "Source": "Plik przekazany przez użytkownika",
+        "Title": "Zdjęcie rozbiórki domu z użyciem koparki",
+        "License": "Do potwierdzenia",
+        "Author": "Do potwierdzenia",
+        "SourceUrl": ""
+    },
+    {
+        "File": "dummy-rozbiorka-dom-02.jpg",
+        "Source": "Plik przekazany przez użytkownika",
+        "Title": "Zdjęcie rozbiórki budynku mieszkalnego",
+        "License": "Do potwierdzenia",
+        "Author": "Do potwierdzenia",
+        "SourceUrl": ""
+    },
+    {
+        "File": "dummy-odsniezanie-ladowarka.webp",
+        "Source": "Plik przekazany przez użytkownika",
+        "Title": "Zdjęcie odśnieżarki z ładowarką",
+        "License": "Do potwierdzenia",
+        "Author": "Do potwierdzenia",
+        "SourceUrl": ""
+    },
+    {
+        "File": "dummy-odsniezanie-plug.jpg",
+        "Source": "Plik przekazany przez użytkownika",
+        "Title": "Zdjęcie pługu śnieżnego podczas pracy",
+        "License": "Do potwierdzenia",
+        "Author": "Do potwierdzenia",
+        "SourceUrl": ""
     }
 ]

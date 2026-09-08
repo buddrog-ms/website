@@ -4,4 +4,4 @@ Disallow: /admin/
 Disallow: /private/
 Disallow: /temp/
 
-Sitemap: https://bud-drogi.pl/sitemap.xml
+Sitemap: https://buddrog.pl/sitemap.xml
