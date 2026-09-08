@@ -724,41 +724,49 @@
 
             // ===== MOBILE TOUCH: Pokaż/ukryj overlay =====
             document.querySelectorAll('.gallery-item').forEach(item => {
-                let isOverlayOpen = false;
+                let longPressTimer;
+                let longPressTriggered = false;
 
-                item.addEventListener('click', function(e) {
-                    // Jeśli to nie lightbox, zablokuj lightbox
-                    if (window.innerWidth < 768) {
-                        e.preventDefault();
-                        
-                        const overlay = this.querySelector('.slide-overlay');
-                        if (!overlay) return;
+                item.addEventListener('touchstart', function() {
+                    if (window.innerWidth >= 768) return;
 
-                        if (!isOverlayOpen) {
-                            // Zamknij wszystkie inne overlaye
-                            document.querySelectorAll('.gallery-item').forEach(other => {
-                                const otherOverlay = other.querySelector('.slide-overlay');
-                                if (otherOverlay && other !== item) {
-                                    other.classList.remove('overlay-open');
-                                }
-                            });
-                            
-                            // Otwórz ten overlay
-                            this.classList.add('overlay-open');
-                            isOverlayOpen = true;
-                        } else {
-                            // Zamknij overlay
-                            this.classList.remove('overlay-open');
-                            isOverlayOpen = false;
-                        }
-                    }
+                    longPressTriggered = false;
+                    longPressTimer = setTimeout(() => {
+                        document.querySelectorAll('.gallery-item.overlay-open').forEach(other => {
+                            other.classList.remove('overlay-open');
+                        });
+                        this.classList.add('overlay-open');
+                        longPressTriggered = true;
+                    }, 450);
+                }, { passive: true });
+
+                item.addEventListener('touchend', function() {
+                    clearTimeout(longPressTimer);
                 });
 
-                // Dotyk na overlay otwiera lightbox
-                item.addEventListener('dblclick', function() {
-                    if (window.innerWidth < 768) {
-                        lightbox.open(this);
+                item.addEventListener('touchmove', function() {
+                    clearTimeout(longPressTimer);
+                });
+
+                item.addEventListener('touchcancel', function() {
+                    clearTimeout(longPressTimer);
+                });
+
+                item.addEventListener('click', function(e) {
+                    if (window.innerWidth >= 768) return;
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const overlay = this.querySelector('.slide-overlay');
+                    if (!overlay) return;
+
+                    if (longPressTriggered) {
+                        longPressTriggered = false;
+                        return;
                     }
+
+                    lightbox.open(this);
                 });
             });
         });
