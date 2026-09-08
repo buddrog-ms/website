@@ -1095,6 +1095,31 @@ body { background-color: #f4f3ef; color: #202326; }
     .nav-menu a:hover { border-left-color: var(--brand-yellow); background-color: var(--brand-yellow-soft); }
 }
 
+@media (max-width: 768px) {
+    .projects-swiper {
+        width: 100%;
+        padding: 0 28px 48px;
+    }
+
+    .projects-swiper .swiper-slide {
+        min-width: 0;
+    }
+
+    .projects-swiper .swiper-button-prev,
+    .projects-swiper .swiper-button-next {
+        width: 32px !important;
+        height: 32px !important;
+        margin-top: -16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .projects-swiper {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+}
+
 /* ─── PROJECT DETAIL PAGE ───────────────────────────── */
 .project-page {
     min-height: 100vh;
