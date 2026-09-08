@@ -26,6 +26,7 @@
                 <span class="project-category" id="project-category">brak opisu</span>
                 <h1 id="project-title">brak opisu</h1>
                 <p id="project-summary">brak opisu</p>
+                <p class="project-gallery-note" id="project-gallery-note">Materiały poglądowe.</p>
             </div>
 
             <div class="project-detail-layout">
@@ -54,13 +55,14 @@
         const projects = {
             'modernizacja-drog': {
                 category: 'Modernizacja dróg',
-                title: 'brak opisu',
-                summary: 'brak opisu',
-                location: 'brak opisu',
-                scope: 'brak opisu',
-                documents: 'brak opisu',
-                description: 'brak opisu',
-                images: ['images/project1.jpg', 'images/project2.jpg', 'images/project3.jpg']
+                title: 'Przykładowa modernizacja drogi',
+                summary: 'Materiał poglądowy prezentujący typowy zakres prac przy modernizacji drogi.',
+                location: 'Do uzupełnienia',
+                scope: 'Prace drogowe i przygotowanie terenu',
+                documents: 'Do uzupełnienia',
+                description: 'Przykładowy zakres może obejmować przygotowanie podłoża, modernizację nawierzchni, transport materiałów sypkich oraz uporządkowanie terenu po zakończeniu robót. Szczegóły lokalizacji, parametrów i dokumentacji zostaną uzupełnione po dodaniu rzeczywistej realizacji.',
+                imageNote: 'Zdjęcia poglądowe - nie przedstawiają dokumentacji konkretnej realizacji.',
+                images: ['images/project1.jpg', 'images/project2.jpg', 'images/project3.jpg', 'images/project4.jpg', 'images/project5.jpg', 'images/project6.jpg']
             },
             odsniezanie: {
                 category: 'Akcja zimowa - odśnieżanie',
@@ -84,11 +86,17 @@
             }
         };
 
-        const project = projects[new URLSearchParams(window.location.search).get('id')] || projects['modernizacja-drog'];
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
+        const queryId = new URLSearchParams(window.location.search).get('id');
+        const projectId = pathParts[0] === 'project' ? pathParts[1] : queryId;
+        const project = projects[projectId] || projects['modernizacja-drog'];
+        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && projectId) {
+            window.history.replaceState({}, '', `/project/${encodeURIComponent(projectId)}`);
+        }
         document.title = `${project.category} - Mar-Buddróg`;
         document.querySelector('meta[name="description"]').setAttribute('content', `${project.category} - realizacja firmy Mar-Buddróg`);
         const canonicalUrl = document.querySelector('link[rel="canonical"]');
-        canonicalUrl.href = `https://buddrog.pl/project?id=${encodeURIComponent(new URLSearchParams(window.location.search).get('id') || 'modernizacja-drog')}`;
+        canonicalUrl.href = `https://buddrog.pl/project/${encodeURIComponent(projectId || 'modernizacja-drog')}`;
         document.getElementById('project-category').textContent = project.category;
         document.getElementById('project-title').textContent = project.title;
         document.getElementById('project-summary').textContent = project.summary;
@@ -96,6 +104,7 @@
         document.getElementById('project-scope').textContent = project.scope;
         document.getElementById('project-documents').textContent = project.documents;
         document.getElementById('project-description').textContent = project.description;
+        document.getElementById('project-gallery-note').textContent = project.imageNote || 'Materiały poglądowe.';
 
         const gallery = document.getElementById('project-gallery');
         project.images.forEach(function(image, index) {
