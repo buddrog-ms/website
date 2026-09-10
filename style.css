@@ -892,7 +892,7 @@ body {
 @media (max-width: 768px) {
     .container { padding: 0 16px; }
 
-    .header > .container { max-width: 100%; left: 0; }
+    .header > .container { max-width: 100%; left: 0; margin-left: auto; margin-right: auto; text-align: center; }
 
     /* Topbar */
     .topbar-left { display: none; }
