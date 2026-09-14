@@ -1,6 +1,18 @@
----
 deployment:
   tasks:
-    - export DEPLOYPATH=$HOME/public_html/
+    # Destination directory for the primary domain of the buddrog account.
+    - export DEPLOYPATH=/home/buddrog/public_html/
+
+    # Deploy the public pages, styling, and search-engine metadata.
     - /bin/cp index.html project.html style.css robots.txt sitemap.xml $DEPLOYPATH
+
+    # Deploy all gallery and project assets.
     - /bin/cp -R images $DEPLOYPATH
+
+    # Directories must be accessible; public files do not need execute permission.
+    - /bin/chmod 644 $DEPLOYPATH/index.html $DEPLOYPATH/project.html $DEPLOYPATH/style.css $DEPLOYPATH/robots.txt $DEPLOYPATH/sitemap.xml
+    - /usr/bin/find $DEPLOYPATH/images -type d -exec /bin/chmod 755 {} +
+    - /usr/bin/find $DEPLOYPATH/images -type f -exec /bin/chmod 644 {} +
+
+
+    
