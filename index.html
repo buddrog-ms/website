@@ -3,12 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Mar-Buddróg - Profesjonalne usługi budowlane i infrastruktury drogowej">
+    <meta name="description" content="Mar-Buddróg: budowa dróg, drenaże, odwodnienia, wodociągi, usługi koparką i wozidłem, transport materiałów, wykopy pod kable, wynajem sprzętu i rozbiórki.">
     <title>Mar-Buddróg - Specjaliści od budowy dróg</title>
     <link rel="canonical" href="https://strzesak.info/">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "GeneralContractor",
+        "name": "Mar-Buddróg",
+        "url": "https://strzesak.info/",
+        "telephone": "+48 534 340 400",
+        "email": "m.dubdrog@gmail.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Tonia 84",
+            "postalCode": "33-200",
+            "addressLocality": "Boleslaw",
+            "addressCountry": "PL"
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "Polska"
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:00",
+            "closes": "17:00"
+        },
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Usługi budowlane i drogowe",
+            "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Budowa dróg" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Drenaże" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Odwodnienia" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Budowa wodociągów" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Usługi koparką" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Usługi wozidłem" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Transport materiałów" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Wykopy pod kable" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Wynajem sprzętu budowlanego" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Akcja zimowa - odśnieżanie" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Rozbiórki budynków" } }
+            ]
+        }
+    }
+    </script>
     
     <!-- ===== ZMIEŃ TUTAJ ===== -->
     <script>
@@ -151,24 +195,57 @@
         <!-- Services Section -->
         <div class="section" id="services">
             <h2>Nasze usługi</h2>
-            <p class="services-note">Firma posiada własny sprzęt, dzięki czemu sprawnie realizuje zlecenia.</p>
-            <div class="services-grid">
-                <div class="service-box">
-                    <h3>Modernizacja dróg</h3>
-                    <p>Modernizacja i remonty istniejących dróg oraz poprawa ich funkcjonalności i bezpieczeństwa.</p>
+            <p class="services-note">Realizujemy prace ziemne, drogowe i rozbiórkowe. Dysponujemy własnym sprzętem, dzięki czemu sprawnie obsługujemy inwestycje budowlane i drogowe.</p>
+            <div class="swiper services-swiper">
+                <div class="services-grid swiper-wrapper">
+                    <div class="service-box swiper-slide">
+                    <h3>Budowa dróg</h3>
+                    <p>Budowa, przebudowa i modernizacja dróg, dojazdów oraz placów wraz z przygotowaniem podłoża i wykonaniem nawierzchni.</p>
                 </div>
-                <div class="service-box">
+                <div class="service-box swiper-slide">
+                    <h3>Drenaże</h3>
+                    <p>Wykonujemy drenaże odprowadzające nadmiar wody z terenów inwestycji, posesji oraz obiektów budowlanych.</p>
+                </div>
+                <div class="service-box swiper-slide">
+                    <h3>Odwodnienia</h3>
+                    <p>Wykonujemy systemy odwodnienia terenu, dróg i placów, zapewniające skuteczne odprowadzanie wód opadowych.</p>
+                </div>
+                <div class="service-box swiper-slide">
+                    <h3>Budowa wodociągów</h3>
+                    <p>Realizujemy prace ziemne i przygotowanie terenu pod budowę oraz rozbudowę sieci wodociągowych.</p>
+                </div>
+                <div class="service-box swiper-slide">
+                    <h3>Usługi koparką</h3>
+                    <p>Oferujemy prace koparką przy wykopach, niwelacji terenu, przygotowaniu podbudowy i załadunku materiałów.</p>
+                </div>
+                <div class="service-box swiper-slide">
+                    <h3>Usługi wozidłem</h3>
+                    <p>Zapewniamy przewóz ziemi, kruszyw i innych materiałów na terenie budowy przy użyciu wozidła.</p>
+                </div>
+                <div class="service-box swiper-slide">
+                    <h3>Transport materiałów</h3>
+                    <p>Organizujemy transport piasku, kruszywa, ziemi oraz innych materiałów sypkich na miejsce realizacji.</p>
+                </div>
+                <div class="service-box swiper-slide">
+                    <h3>Wykopy pod kable</h3>
+                    <p>Wykonujemy precyzyjne wykopy pod kable energetyczne, telekomunikacyjne i instalacje podziemne.</p>
+                </div>
+                <div class="service-box swiper-slide">
+                    <h3>Wynajem sprzętu budowlanego</h3>
+                    <p>Udostępniamy sprawny sprzęt budowlany do prac ziemnych, drogowych, transportowych i porządkowych.</p>
+                </div>
+                <div class="service-box swiper-slide">
                     <h3>Akcja zimowa - odśnieżanie</h3>
                     <p>Odśnieżanie dróg, placów i terenów zewnętrznych podczas akcji zimowej.</p>
                 </div>
-                <div class="service-box">
-                    <h3>Rozbiórka budynków</h3>
-                    <p>Bezpieczne i sprawne rozbiórki budynków wraz z przygotowaniem terenu po zakończeniu prac.</p>
+                <div class="service-box swiper-slide">
+                    <h3>Rozbiórki budynków</h3>
+                    <p>Bezpiecznie realizujemy rozbiórki budynków i obiektów wraz z segregacją materiałów oraz uporządkowaniem terenu.</p>
                 </div>
-                <div class="service-box">
-                    <h3>Transport materiałów sypkich</h3>
-                    <p>Transport piasku, kruszywa, ziemi i innych materiałów sypkich na miejsce realizacji.</p>
                 </div>
+                <div class="swiper-pagination services-pagination"></div>
+                <button class="swiper-button-prev services-button-prev" type="button" aria-label="Poprzednia usługa"></button>
+                <button class="swiper-button-next services-button-next" type="button" aria-label="Następna usługa"></button>
             </div>
         </div>
 
@@ -612,6 +689,41 @@
                     1024: {
                         slidesPerView: 3,
                         spaceBetween: 24
+                    }
+                }
+            });
+
+            const servicesSwiper = new Swiper('.services-swiper', {
+                slidesPerView: 3,
+                spaceBetween: 24,
+                watchOverflow: true,
+                grid: {
+                    rows: 2,
+                    fill: 'row'
+                },
+                pagination: {
+                    el: '.services-pagination',
+                    clickable: true
+                },
+                navigation: {
+                    nextEl: '.services-button-next',
+                    prevEl: '.services-button-prev'
+                },
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 16,
+                        grid: { rows: 2, fill: 'row' }
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                        grid: { rows: 2, fill: 'row' }
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                        spaceBetween: 24,
+                        grid: { rows: 2, fill: 'row' }
                     }
                 }
             });
