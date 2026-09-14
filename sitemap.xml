@@ -7,25 +7,25 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://strzesak.info/project/road-modernization</loc>
+    <loc>https://strzesak.info/project.html?id=modernizacja-drog</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://strzesak.info/project/snow-removal</loc>
+    <loc>https://strzesak.info/project.html?id=odsniezanie</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://strzesak.info/project/building-demolition</loc>
+    <loc>https://strzesak.info/project.html?id=rozbiorka-budynku</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://strzesak.info/project/material-transport</loc>
+    <loc>https://strzesak.info/project.html?id=transport-materialow</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
