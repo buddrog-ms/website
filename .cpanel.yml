@@ -9,10 +9,15 @@ deployment:
     # Deploy all gallery and project assets.
     - /bin/cp -R images $DEPLOYPATH
 
+    # Deploy the certificate authority validation file.
+    - /bin/cp -R .well-known $DEPLOYPATH
+
     # Directories must be accessible; public files do not need execute permission.
     - /bin/chmod 644 $DEPLOYPATH/index.html $DEPLOYPATH/project.html $DEPLOYPATH/style.css $DEPLOYPATH/robots.txt $DEPLOYPATH/sitemap.xml $DEPLOYPATH/.htaccess
     - /usr/bin/find $DEPLOYPATH/images -type d -exec /bin/chmod 755 {} +
     - /usr/bin/find $DEPLOYPATH/images -type f -exec /bin/chmod 644 {} +
+    - /usr/bin/find $DEPLOYPATH/.well-known -type d -exec /bin/chmod 755 {} +
+    - /usr/bin/find $DEPLOYPATH/.well-known -type f -exec /bin/chmod 644 {} +
 
 
     
