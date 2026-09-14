@@ -373,6 +373,31 @@ body {
     margin-top: 32px;
 }
 
+.services-swiper {
+    position: relative;
+    padding: 0 48px 52px;
+    overflow: hidden;
+}
+
+.services-swiper .services-grid {
+    display: flex;
+    gap: 0;
+    margin-top: 0;
+}
+
+.services-swiper .service-box {
+    height: auto;
+}
+
+.services-swiper .swiper-button-prev,
+.services-swiper .swiper-button-next {
+    color: var(--brand-yellow-dark) !important;
+}
+
+.services-swiper .swiper-pagination {
+    bottom: 12px !important;
+}
+
 .service-box {
     background: #f9fafb;
     padding: 32px;
