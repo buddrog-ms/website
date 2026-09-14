@@ -4,4 +4,4 @@ Disallow: /admin/
 Disallow: /private/
 Disallow: /temp/
 
-Sitemap: https://strzesak.info/sitemap.xml
+Sitemap: https://www.strzesak.info/sitemap.xml
