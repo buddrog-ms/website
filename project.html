@@ -140,7 +140,7 @@
         });
 
         const projects = {
-            'road-modernization': {
+            'modernizacja-drog': {
                 category: 'Modernizacja dróg',
                 title: 'Modernizacja drogi lokalnej',
                 summary: 'Kompleksowa modernizacja nawierzchni wraz z poprawą bezpieczeństwa i organizacji ruchu.',
@@ -150,7 +150,7 @@
                 images: ['images/gallery/project1.jpg', 'images/gallery/project2.jpg', 'images/gallery/project3.jpg', 'images/gallery/project4.jpg', 'images/gallery/project5.jpg', 'images/gallery/project6.jpg'],
                 videos: []
             },
-            'snow-removal': {
+            'odsniezanie': {
                 category: 'Akcja zimowa - odśnieżanie',
                 title: 'Akcja zimowa - odśnieżanie',
                 summary: 'Zimowe utrzymanie dróg, placów i terenów zewnętrznych.',
@@ -160,7 +160,7 @@
                 images: ['images/gallery/dummy-odsniezanie-01.jpg', 'images/realizations/snow-removal/photos/dummy-odsniezanie-02.jpg', 'images/realizations/snow-removal/photos/dummy-odsniezanie-ladowarka.webp', 'images/realizations/snow-removal/photos/dummy-odsniezanie-plug.jpg'],
                 videos: [] // brak ciekawego materialu na razie - plik zostal w images/realizations/snow-removal/videos/
             },
-            'building-demolition': {
+            'rozbiorka-budynku': {
                 category: 'Rozbiórka budynków',
                 description: 'Zakres prac obejmował przygotowanie i zabezpieczenie terenu, rozbiórkę budynku przy użyciu odpowiedniego sprzętu, segregację materiałów oraz uporządkowanie miejsca po zakończeniu robót.',
                 imageNote: '',
@@ -170,7 +170,7 @@
                 images: ['images/gallery/dummy-rozbiorka-01.jpg', 'images/realizations/building-demolition/photos/dummy-rozbiorka-02.jpg', 'images/realizations/building-demolition/photos/dummy-rozbiorka-dom-01.jpg', 'images/realizations/building-demolition/photos/dummy-rozbiorka-dom-02.jpg'],
                 videos: []
             },
-            'material-transport': {
+            'transport-materialow': {
                 category: 'Transport materiałów sypkich',
                 title: 'Transport materiałów sypkich',
                 summary: 'Organizacja transportu piasku, kruszywa i ziemi na miejsce realizacji.',
@@ -185,15 +185,15 @@
         const pathParts = window.location.pathname.split('/').filter(Boolean);
         const queryId = new URLSearchParams(window.location.search).get('id');
         const pathId = pathParts[0] === 'project' ? pathParts[1] : null;
-        const projectId = queryId || pathId || 'road-modernization';
-        const project = projects[projectId] || projects['road-modernization'];
+        const projectId = queryId || pathId || 'modernizacja-drog';
+        const project = projects[projectId] || projects['modernizacja-drog'];
         if (!queryId && pathId && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
             window.history.replaceState({}, '', `/project/${encodeURIComponent(projectId)}`);
         }
         document.title = `${project.category} - Mar-Buddróg`;
         document.querySelector('meta[name="description"]').setAttribute('content', `${project.category} - realizacja firmy Mar-Buddróg`);
         const canonicalUrl = document.querySelector('link[rel="canonical"]');
-        canonicalUrl.href = `https://strzesak.info/project/${encodeURIComponent(projectId)}`;
+        canonicalUrl.href = `https://strzesak.info/project.html?id=${encodeURIComponent(projectId)}`;
         document.getElementById('project-category').textContent = project.category;
         document.getElementById('project-title').textContent = project.title;
         document.getElementById('project-summary').textContent = project.summary;

@@ -4,8 +4,5 @@ RewriteEngine On
 RewriteCond %{THE_REQUEST} \s/+index\.html(?:[?\s]) [NC]
 RewriteRule ^index\.html$ / [R=301,L]
 
-RewriteCond %{THE_REQUEST} \s/+project\.html\?id=([^&\s]+) [NC]
-RewriteRule ^project\.html$ /project/%1? [R=301,L,NE]
-
 # Serve project details through clean, shareable URLs.
 RewriteRule ^project/([a-z0-9-]+)/?$ project.html?id=$1 [L,QSA,NC]
