@@ -1,5 +1,15 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        { "type": "host", "value": "strzesak.info" }
+      ],
+      "destination": "https://www.strzesak.info/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/project/:id",
