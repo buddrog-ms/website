@@ -1,0 +1,15 @@
+{
+  "name": "mar-buddrog-utils",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Narzędzia deweloperskie dla strony Mar-Buddróg",
+  "scripts": {
+    "optimize": "node optimize-images.js",
+    "optimize:webp": "node optimize-images.js --webp-only",
+    "optimize:jpeg": "node optimize-images.js --jpeg-only",
+    "optimize:gallery": "node optimize-images.js --dir=images/gallery"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}
