@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
@@ -217,14 +217,34 @@
             const slide = document.createElement('div');
             slide.className = 'swiper-slide';
 
+            // Rozbicie ścieżki pliku na base i ext
+            const extMatch = image.match(/\.(jpg|jpeg|png|webp)$/i);
+            const ext = extMatch && extMatch[0].toLowerCase() !== '.webp' ? extMatch[0] : '.jpg';
+            const basePath = image.replace(/\.(jpg|jpeg|png|webp)$/i, '');
+
+            const webp600 = `${basePath}/600w.webp`;
+            const webp1200 = `${basePath}/1200w.webp`;
+            const webp1920 = `${basePath}/1920w.webp`;
+            const jpg600 = `${basePath}/600w.jpg`;
+            const jpg1200 = `${basePath}/1200w.jpg`;
+
             const link = document.createElement('a');
-            link.href = image;
+            link.href = webp1920;
             link.className = 'project-detail-image-link glightbox';
             link.setAttribute('data-gallery', 'project-gallery');
             link.setAttribute('aria-label', `Otwórz zdjęcie ${index + 1}`);
 
+            const picture = document.createElement('picture');
+
+            const source = document.createElement('source');
+            source.type = 'image/webp';
+            source.srcset = `${webp600} 600w, ${webp1200} 1200w, ${webp1920} 1920w`;
+            source.sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 900px';
+
             const imageElement = document.createElement('img');
-            imageElement.src = image;
+            imageElement.src = jpg600;
+            imageElement.srcset = `${jpg600} 600w, ${jpg1200} 1200w`;
+            imageElement.sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 900px';
             imageElement.alt = `${project.title} – zdjęcie ${index + 1}`;
             imageElement.decoding = 'async';
             if (index > 0) {
@@ -232,7 +252,10 @@
             } else {
                 imageElement.fetchPriority = 'high';
             }
-            link.appendChild(imageElement);
+
+            picture.appendChild(source);
+            picture.appendChild(imageElement);
+            link.appendChild(picture);
             slide.appendChild(link);
             gallery.appendChild(slide);
         });

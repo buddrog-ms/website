@@ -1,4 +1,4 @@
-﻿/* Modern Construction Website - CSS 2024 */
+/* Modern Construction Website - CSS 2024 */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -185,7 +185,7 @@ body {
 .header {
     background:
         linear-gradient(135deg, rgba(37,99,235,0.72) 0%, rgba(59,130,246,0.72) 100%),
-        url('images/background/header-bg.jpg') center/cover no-repeat;
+        url('images/background/header-bg/1920w.webp') center/cover no-repeat;
     background-attachment: fixed;
     color: #fff;
     padding: 120px 0;
@@ -493,11 +493,45 @@ body {
     outline-offset: 4px;
 }
 
-.project-card > img {
+.project-card > img,
+.project-card picture img {
     width: 100%;
     height: 220px;
     object-fit: cover;
     display: block;
+}
+
+.project-card picture {
+    display: block;
+    width: 100%;
+    height: 220px;
+}
+
+.project-detail-image-link {
+    display: block;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.project-detail-image-link picture {
+    display: block;
+    width: 100%;
+}
+
+.project-detail-image-link img {
+    width: 100%;
+    height: 480px;
+    max-height: 70vh;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+    .project-detail-image-link img {
+        height: 300px;
+    }
 }
 
 .project-card-content {
@@ -948,7 +982,7 @@ body { background-color: #f4f3ef; color: #202326; }
 .nav-btn:hover, .scroll-top:hover { background-color: var(--brand-yellow-dark) !important; }
 .hamburger span { background-color: #3b4145; }
 .header {
-    background: linear-gradient(135deg, rgba(37,42,46,0.84) 0%, rgba(74,79,82,0.72) 100%), url('images/background/header-bg.jpg') center/cover no-repeat;
+    background: linear-gradient(135deg, rgba(37,42,46,0.84) 0%, rgba(74,79,82,0.72) 100%), url('images/background/header-bg/1920w.webp') center/cover no-repeat;
 }
 .header .tagline { color: #fff1bf; }
 .btn-primary { color: var(--brand-yellow-dark); }
