@@ -27,6 +27,7 @@ const CONFIG = {
     inputDirs: [
         'images/gallery',
         'images/realizations/building-demolition/photos',
+        'images/realizations/drenaze/photos',
         'images/realizations/material-transport/photos',
         'images/realizations/road-modernization/photos',
         'images/realizations/snow-removal/photos',
