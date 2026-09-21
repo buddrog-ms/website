@@ -8,12 +8,42 @@
       ],
       "destination": "https://www.strzesak.info/:path*",
       "permanent": true
+    },
+    {
+      "source": "/project.html",
+      "has": [{ "type": "query", "key": "id", "value": "modernizacja-drog" }],
+      "destination": "/project/modernizacja-drog",
+      "permanent": true
+    },
+    {
+      "source": "/project.html",
+      "has": [{ "type": "query", "key": "id", "value": "odsniezanie" }],
+      "destination": "/project/odsniezanie",
+      "permanent": true
+    },
+    {
+      "source": "/project.html",
+      "has": [{ "type": "query", "key": "id", "value": "rozbiorka-budynku" }],
+      "destination": "/project/rozbiorka-budynku",
+      "permanent": true
+    },
+    {
+      "source": "/project.html",
+      "has": [{ "type": "query", "key": "id", "value": "transport-materialow" }],
+      "destination": "/project/transport-materialow",
+      "permanent": true
+    },
+    {
+      "source": "/project.html",
+      "has": [{ "type": "query", "key": "id", "value": "drenaze" }],
+      "destination": "/project/drenaze",
+      "permanent": true
     }
   ],
   "rewrites": [
     {
       "source": "/project/:id",
-      "destination": "/project.html?id=:id"
+      "destination": "/project/:id.html"
     }
   ],
   "headers": [

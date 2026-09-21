@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,follow">
     <meta name="description" content="Szczegóły realizacji Mar-Buddróg">
     <meta property="og:url" content="https://www.strzesak.info/project/">
     <meta property="og:type" content="website">
@@ -15,6 +16,26 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+    <script id="breadcrumb-schema" type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Strona główna",
+                "item": "https://www.strzesak.info/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Modernizacja drogi lokalnej",
+                "item": "https://www.strzesak.info/project/modernizacja-drog"
+            }
+        ]
+    }
+    </script>
 
     <!-- ===== ZMIEŃ TUTAJ ===== -->
     <script>
@@ -203,16 +224,39 @@
         const pathParts = window.location.pathname.split('/').filter(Boolean);
         const queryId = new URLSearchParams(window.location.search).get('id');
         const pathId = pathParts[0] === 'project' ? pathParts[1] : null;
-        const projectId = queryId || pathId || 'modernizacja-drog';
-        const project = projects[projectId] || projects['modernizacja-drog'];
+        const requestedProjectId = queryId || pathId;
+        const projectId = requestedProjectId && projects[requestedProjectId] ? requestedProjectId : 'modernizacja-drog';
+        const project = projects[projectId];
         if (!queryId && pathId && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
             window.history.replaceState({}, '', `/project/${encodeURIComponent(projectId)}`);
         }
-        document.title = `${project.category} - Mar-Buddróg`;
-        document.querySelector('meta[name="description"]').setAttribute('content', `${project.category} - realizacja firmy Mar-Buddróg`);
+        const pageTitle = `${project.title} - Mar-Buddróg`;
+        const pageDescription = `${project.summary} Zobacz zakres realizacji firmy Mar-Buddróg.`;
+        document.title = pageTitle;
+        document.querySelector('meta[name="description"]').setAttribute('content', pageDescription);
         const canonicalUrl = document.querySelector('link[rel="canonical"]');
-            canonicalUrl.href = `https://www.strzesak.info/project/${encodeURIComponent(projectId)}`;
+        canonicalUrl.href = `https://www.strzesak.info/project/${encodeURIComponent(projectId)}`;
+        document.querySelector('meta[property="og:title"]').setAttribute('content', pageTitle);
+        document.querySelector('meta[property="og:description"]').setAttribute('content', pageDescription);
         document.querySelector('meta[property="og:url"]').setAttribute('content', canonicalUrl.href);
+        document.getElementById('breadcrumb-schema').textContent = JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+                {
+                    '@type': 'ListItem',
+                    position: 1,
+                    name: 'Strona główna',
+                    item: 'https://www.strzesak.info/'
+                },
+                {
+                    '@type': 'ListItem',
+                    position: 2,
+                    name: project.title,
+                    item: canonicalUrl.href
+                }
+            ]
+        });
         document.getElementById('project-category').textContent = project.category;
         document.getElementById('project-title').textContent = project.title;
         document.getElementById('project-summary').textContent = project.summary;
