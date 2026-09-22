@@ -55,23 +55,25 @@ body {
 
 .topbar-social-placeholder {
     display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
+    align-items: center;
+    justify-content: center;
     border: 0;
     padding: 0;
+    width: 32px;
+    aspect-ratio: 1;
     background: transparent;
     color: #f7d36b;
-    font: inherit;
+}
+
+.topbar-social-placeholder svg {
+    display: block;
+    width: 18px;
+    height: 18px;
 }
 
 .topbar-social-placeholder:disabled {
     cursor: default;
     opacity: 1;
-}
-
-.topbar-social-placeholder small {
-    color: #c7b879;
-    font-size: 11px;
 }
 
 /* ─── NAVBAR ─────────────────────────────────────────── */
