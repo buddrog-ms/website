@@ -789,6 +789,32 @@ body {
     margin: 0;
 }
 
+.footer-social-placeholder {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+}
+
+.footer-social-name {
+    color: #fff;
+    font-weight: 600;
+}
+
+.footer-social-note {
+    color: currentColor;
+    font-size: 12px;
+}
+
+.footer-social-placeholder:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
 .footer-dev {
     font-size: 12px;
     color: #60a5fa;
