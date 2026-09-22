@@ -12,31 +12,31 @@
     {
       "source": "/project.html",
       "has": [{ "type": "query", "key": "id", "value": "modernizacja-drog" }],
-      "destination": "/project/modernizacja-drog",
+      "destination": "https://www.strzesak.info/project/modernizacja-drog",
       "permanent": true
     },
     {
       "source": "/project.html",
       "has": [{ "type": "query", "key": "id", "value": "odsniezanie" }],
-      "destination": "/project/odsniezanie",
+      "destination": "https://www.strzesak.info/project/odsniezanie",
       "permanent": true
     },
     {
       "source": "/project.html",
       "has": [{ "type": "query", "key": "id", "value": "rozbiorka-budynku" }],
-      "destination": "/project/rozbiorka-budynku",
+      "destination": "https://www.strzesak.info/project/rozbiorka-budynku",
       "permanent": true
     },
     {
       "source": "/project.html",
       "has": [{ "type": "query", "key": "id", "value": "transport-materialow" }],
-      "destination": "/project/transport-materialow",
+      "destination": "https://www.strzesak.info/project/transport-materialow",
       "permanent": true
     },
     {
       "source": "/project.html",
       "has": [{ "type": "query", "key": "id", "value": "drenaze" }],
-      "destination": "/project/drenaze",
+      "destination": "https://www.strzesak.info/project/drenaze",
       "permanent": true
     }
   ],
