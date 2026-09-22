@@ -36,11 +36,14 @@ body {
 
 .topbar-right {
     display: flex;
+    align-items: center;
     gap: 20px;
     flex-wrap: wrap;
 }
 
 .topbar-link {
+    display: inline-flex;
+    align-items: center;
     color: #93c5fd;
     text-decoration: none;
     transition: color 0.2s;
