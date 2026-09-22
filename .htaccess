@@ -9,5 +9,17 @@ RewriteRule ^ https://www.strzesak.info%{REQUEST_URI} [R=301,L]
 RewriteCond %{THE_REQUEST} \s/+index\.html(?:[?\s]) [NC]
 RewriteRule ^index\.html$ / [R=301,L]
 
-# Serve project details through clean, shareable URLs.
-RewriteRule ^project/([a-z0-9-]+)/?$ project.html?id=$1 [L,QSA,NC]
+# Redirect legacy query-string project URLs to their static SEO pages.
+RewriteCond %{THE_REQUEST} \s/+project\.html\?id=modernizacja-drog(?:[&\s]) [NC]
+RewriteRule ^project\.html$ /project/modernizacja-drog [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+project\.html\?id=odsniezanie(?:[&\s]) [NC]
+RewriteRule ^project\.html$ /project/odsniezanie [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+project\.html\?id=rozbiorka-budynku(?:[&\s]) [NC]
+RewriteRule ^project\.html$ /project/rozbiorka-budynku [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+project\.html\?id=transport-materialow(?:[&\s]) [NC]
+RewriteRule ^project\.html$ /project/transport-materialow [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+project\.html\?id=drenaze(?:[&\s]) [NC]
+RewriteRule ^project\.html$ /project/drenaze [R=301,L]
+
+# Serve each project from its own static HTML page through a clean URL.
+RewriteRule ^project/([a-z0-9-]+)/?$ project/$1.html [L,NC]
