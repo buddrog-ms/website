@@ -794,53 +794,6 @@ body {
 }
 
 /* ─── FOOTER ─────────────────────────────────────────── */
-.company-details {
-    background: #f3f4f2;
-    color: #343a3d;
-    border-top: 1px solid #d9ddda;
-    padding: 24px 0;
-}
-
-.company-details-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px 36px;
-}
-
-.company-details h2 {
-    flex: 0 0 auto;
-    margin: 0;
-    font-size: 15px;
-    font-weight: 700;
-}
-
-.company-details-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 8px 28px;
-    margin: 0;
-}
-
-.company-details-list div {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-}
-
-.company-details-list dt {
-    color: #687176;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.company-details-list dd {
-    margin: 0;
-    font-size: 13px;
-}
-
 .footer {
     background-color: #1e40af;
     color: #93c5fd;
@@ -933,16 +886,6 @@ body {
 
 @media (max-width: 768px) {
     .container { padding: 0 16px; }
-
-    .company-details-inner {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 14px;
-    }
-    .company-details-list {
-        justify-content: flex-start;
-        gap: 12px 24px;
-    }
 
     .header > .container { max-width: 100%; left: 0; margin-left: auto; margin-right: auto; text-align: center; }
 
