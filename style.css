@@ -53,6 +53,27 @@ body {
 
 .topbar-link:hover { color: #fff; }
 
+.topbar-social-placeholder {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: #f7d36b;
+    font: inherit;
+}
+
+.topbar-social-placeholder:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+.topbar-social-placeholder small {
+    color: #c7b879;
+    font-size: 11px;
+}
+
 /* ─── NAVBAR ─────────────────────────────────────────── */
 .navbar {
     background-color: #fff;
@@ -787,32 +808,6 @@ body {
 
 .footer-inner p {
     margin: 0;
-}
-
-.footer-social-placeholder {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: 0;
-    padding: 0;
-    background: transparent;
-    color: inherit;
-    font: inherit;
-}
-
-.footer-social-name {
-    color: #fff;
-    font-weight: 600;
-}
-
-.footer-social-note {
-    color: currentColor;
-    font-size: 12px;
-}
-
-.footer-social-placeholder:disabled {
-    cursor: default;
-    opacity: 1;
 }
 
 .footer-dev {
