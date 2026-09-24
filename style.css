@@ -44,13 +44,14 @@ body {
 .topbar-link {
     display: inline-flex;
     align-items: center;
+    gap: 8px;
     color: #93c5fd;
     text-decoration: none;
     transition: color 0.2s;
 }
 
 .icon-inline {
-    vertical-align: -2px;
+    vertical-align: middle;
     flex-shrink: 0;
 }
 
@@ -62,16 +63,22 @@ body {
     justify-content: center;
     border: 0;
     padding: 0;
-    width: 32px;
-    aspect-ratio: 1;
+    width: 24px;
+    height: 24px;
     background: transparent;
     color: #f7d36b;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.topbar-social-placeholder:hover:not(:disabled) {
+    opacity: 0.8;
 }
 
 .topbar-social-placeholder svg {
     display: block;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
 }
 
 .topbar-social-placeholder:disabled {
