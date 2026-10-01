@@ -57,7 +57,7 @@ body {
 
 .topbar-link:hover { color: #fff; }
 
-.topbar-social-placeholder {
+.topbar-social-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -71,19 +71,14 @@ body {
     transition: opacity 0.2s;
 }
 
-.topbar-social-placeholder:hover:not(:disabled) {
+.topbar-social-link:hover {
     opacity: 0.8;
 }
 
-.topbar-social-placeholder svg {
+.topbar-social-link svg {
     display: block;
     width: 16px;
     height: 16px;
-}
-
-.topbar-social-placeholder:disabled {
-    cursor: default;
-    opacity: 1;
 }
 
 /* ─── NAVBAR ─────────────────────────────────────────── */
