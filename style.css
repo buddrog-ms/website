@@ -34,6 +34,7 @@ body {
 }
 
 img { max-width: 100%; }
+picture { display: contents; }
 
 h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 

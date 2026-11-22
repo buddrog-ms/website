@@ -10,6 +10,7 @@ Ten plik opisuje, co zmieniło się względem obecnej wersji na https://www.strz
 - Usługi: 11 usług (jak na starej stronie) z grafikami `images/service-*.jpg` (AI, poglądowe).
 - Wybrane realizacje: 4 interaktywne karty-albumy + pełna galeria 36 prawdziwych zdjęć (Swiper + GLightbox, bez podpisów w powiększeniu).
 - Statystyki: 20+ lat, 500+ projektów, 1200 km, 100% zadowolonych klientów.
+- Zdjęcia: miniatury WebP/JPEG (600w i 1200w) w `<picture>`/`srcset` z `loading="lazy"` zamiast pełnych plików; pełny `1920w.webp` otwiera się dopiero w lightboxie. Ukryte slajdy albumów ładują się po załadowaniu strony lub przy interakcji. Źródła w `images/gallery/projectN/` (zdjęcia realizacji) oraz `images/service-*/` (usługi); poster hero ma wersję `hero-poster-video.webp`. Warianty generuje `utils/optimize-images.js` (sharp).
 - Strzałka "wróć na górę" w nowym wyglądzie; kliknięcie w logo przeładowuje stronę na czysty adres `/`.
 
 ### Zachowane elementy identyfikacyjne ze starej strony
