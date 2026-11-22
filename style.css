@@ -997,15 +997,20 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 
     .hero { padding-top: 64px; min-height: auto; }
     .hero-bg, .hero-overlay { top: 0; bottom: 130px; height: auto; min-height: 0; max-height: none; }
-    .hero-poster, .hero-video-bg { object-position: center 22%; }
+    .hero-poster, .hero-video-bg { object-position: center 30%; }
     .hero-overlay {
         background:
-            linear-gradient(180deg, rgba(15,18,21,0.42) 0%, rgba(15,18,21,0.16) 24%, rgba(15,18,21,0.34) 50%, rgba(15,18,21,0.72) 78%, var(--asphalt) 100%);
+            linear-gradient(180deg, rgba(15,18,21,0.55) 0%, rgba(15,18,21,0.12) 20%, rgba(15,18,21,0.14) 54%, rgba(15,18,21,0.74) 80%, var(--asphalt) 100%);
     }
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        padding-top: 22px;
+        padding-bottom: 24px;
+    }
+    .hero .eyebrow { margin-bottom: 33svh; font-size: 11px; }
     .hero h1 { font-size: clamp(34px, 9.2vw, 44px); letter-spacing: -1.5px; margin-bottom: 10px; }
-    .hero .eyebrow { margin-bottom: 8px; font-size: 11px; }
     .hero .tagline { font-size: 15px; line-height: 1.45; margin-bottom: 18px; }
-    .hero-content { padding-top: 29svh; padding-bottom: 24px; }
 
     .hero-stats { margin-bottom: -48px; }
     #about { padding-top: 104px; }
