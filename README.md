@@ -1,71 +1,68 @@
-# BUD-DROGI - Strona Internetowa
+# Mar-Buddróg - Strona Internetowa
 
-Statyczna strona internetowa dla firmy budowlanej, w stylu vintage (lata 90-2000).
+Statyczna jednostronicowa strona firmy Mar-Buddróg (Marcin Strzesak) - budowa dróg, odwodnienia, roboty ziemne i usługi sprzętowe. HTML + CSS + JavaScript, bez procesu budowania.
 
-## Struktura Projektu
+Domena docelowa (canonical, sitemap, Open Graph): `https://www.strzesak.info`
+
+## Struktura projektu
 
 ```
-construction-website/
-├── index.html          # Główny plik HTML strony
-├── style.css          # Arkusz stylów CSS
-├── images/            # Folder na zdjęcia dla galerii
-└── README.md          # Ten plik
+construction-website-main/
+├── index.html      # Cała strona: treść, konfiguracja (CONFIG), skrypty, dane SEO
+├── style.css       # Style
+├── sitemap.xml     # Mapa strony
+├── robots.txt      # Reguły dla robotów + adres sitemap
+├── README.md       # Ten plik
+├── CHANGELOG.md    # Lista zmian i checklista wdrożeniowa (czytaj przed podmianą strony)
+├── .htaccess       # Przekierowania (apex/HTTPS na www, stare /project/* na /#projects) - Apache/cPanel
+├── vercel.json     # To samo dla Vercel
+├── .cpanel.yml     # Wdrożenie na cPanel (kopiuje index.html, style.css, images itd.)
+└── images/
+    ├── project1-6.jpg, project7-36.jpeg   # Prawdziwe zdjęcia z budów (karty realizacji + galeria)
+    ├── service-*.jpg                      # 11 grafik usług (wygenerowane AI, poglądowe)
+    ├── road-sequence-01..04 (*.mp4)       # Skompresowane filmy AI w tle hero (łącznie ok. 63 MB)
+    ├── hero-poster-video.jpg              # Poster hero (1. klatka klipu 1)
+    ├── favicon-ms-strzesak.png            # Ikona strony (ta sama co na strzesak.info)
 ```
 
-## Jak Używać
+## Dane kontaktowe (CONFIG)
 
-### 1. Dodawanie Zdjęć do Galerii
+Telefon, email, adres i osoba kontaktowa są w obiekcie `CONFIG` na górze `index.html` i JavaScript wstawia je do nawigacji oraz sekcji Kontakt. Po zmianie danych zaktualizuj też ręcznie:
 
-1. Umieść obrazy w folderze `images/` (np. project1.jpg, project2.jpg, itd.)
-2. Zasugerowane wymiary: minimum 500x400px
-3. Format: JPG, PNG lub WebP
-4. Pliki powinny być nazwane: `project1.jpg`, `project2.jpg`, itp.
+- blok JSON-LD (`<script type="application/ld+json">`) w `<head>`,
+- adres w osadzonej mapie Google (iframe w sekcji Kontakt),
+- statyczne wartości w HTML sekcji Kontakt (są zapasem, gdy JS nie działa).
 
-### 2. Edytowanie Zawartości
+## Sekcje strony
 
-Otwórz plik `index.html` w edytorze tekstu i zmień:
+1. **Nawigacja** - jeden przezroczysty pasek, po przewinięciu ciemny. Logo odświeża stronę główną (`index.html`).
+2. **Hero** - pełnoekranowe, z sekwencją 4 filmów AI w tle (tylko na ekranach od 768 px i bez `prefers-reduced-motion`; poza tym widoczne zdjęcie `project2.jpg`) oraz karta ze statystykami.
+3. **O nas** - opis firmy i 4 filary.
+4. **Usługi** - 11 usług z grafikami `images/service-*.jpg`.
+5. **Wybrane realizacje** - 4 karty (`[data-project]`), każda jako album zdjęć ze strzałkami, kropkami, licznikiem i przyciskiem „Powiększ zdjęcia" otwierającym lightbox (GLightbox) bez podpisów.
+6. **Galeria** - wszystkie 36 prawdziwych zdjęć (Swiper, siatka rzędów).
+7. **Kontakt** - dane, godziny i mapa.
 
-- **Nazwa firmy**: "BUD-DROGI" na inną (w header)
-- **Opis firmy**: zmień tekst w sekcji "O nas"
-- **Usługi**: dostosuj cztery usługi w sekcji "Nasze usługi"
-- **Podpisy do zdjęć**: zmień teksty w galerii
-- **Kontakt**: wpisz właściwe dane (adres, telefon, email, godziny)
+## Film w hero
 
-### 3. Otwieranie Strony
+Cztery pliki (kolejność w `index.html`): `road-sequence-01-precise.mp4`, `road-sequence-02-highway-v3.mp4`, `road-sequence-03-drainage-v3.mp4`, `road-sequence-04-roundabout-v4.mp4`. Wszystkie mają rozdzielczość 1920×1088. Skrypt odtwarza je po kolei z przenikaniem 1,5 s i wraca do pierwszego. Filmy są wygenerowane przez AI i mają charakter ilustracyjny - nie przedstawiają realizacji firmy.
 
-- Kliknij dwukrotnie na `index.html`, aby otworzyć w przeglądarce
-- Lub przeciągnij `index.html` do okna przeglądarki
+## Uruchomienie lokalne
 
-## Charakterystyka Designu
+```
+python -m http.server 8000
+```
 
-✓ **Vintage Aesthetic** - Design z inspiracji stronami z lat 90-2000
-✓ **Responsive** - Dostosowuje się do urządzeń mobilnych
-✓ **Professionalne Kolory** - Ciemny niebieski (#1a3a52) z akcentami beżu (#d4a574)
-✓ **Prostota** - Łatwe do edytowania i szybkie do ładowania
-✓ **Galeria** - Grid galerii zdjęć projektu (6 elementów)
+Następnie `http://localhost:8000`. Strona korzysta z bibliotek ładowanych z CDN (GLightbox, Swiper, Google Fonts), więc potrzebuje połączenia z internetem.
 
-## Kolory Użyte
+## SEO
 
-- **Ciemny Niebieski**: #1a3a52 (header, nawigacja)
-- **Beż/Brąz**: #d4a574 (akcenty, ramki)
-- **Szary**: #e8e8e8 (tło)
-- **Biały**: #fff (konten)
+W `<head>` `index.html`: meta description, canonical, Open Graph, Twitter Card, `theme-color` oraz dane strukturalne JSON-LD (`GeneralContractor`) z adresem, współrzędnymi GPS (`geo`), województwem, telefonem, emailem, godzinami, profilem Facebook (`sameAs`) i listą usług. `sitemap.xml` zawiera tylko stronę główną (kotwice `#...` nie należą do sitemap).
 
-## Sekcje Strony
+## Przed publikacją
 
-1. **Header** - Logo i tagline
-2. **Nawigacja** - Menu do nawigacji
-3. **O Nas** - Opis firmy
-4. **Usługi** - 4 główne usługi
-5. **Galeria** - 6 projektów w galerii
-6. **Kontakt** - Informacje kontaktowe
-7. **Footer** - Stopka
-
-## Notatki Dodatkowe
-
-- Strona jest w pełni statyczna (nie wymaga serwera)
-- Wszystkie pliki można umieścić na dowolnym serwerze WWW
-- Można łatwo dodać więcej zdjęć do galerii (kopiuj-wklej sekcje w HTML)
-- CSS zawiera animacje hover dla efektu interaktywności
-
-Powodzenia z prowadzeniem strony! 🏗️
+- Filmy są już skompresowane (H.264, CRF 29, ok. 63 MB łącznie). Serwer powinien obsługiwać żądania Range (większość hostingów robi to domyślnie).
+- Potwierdź liczby w karcie statystyk (500+ projektów, 1200 km) - pochodzą z szablonu i nie są zweryfikowane. „20+ lat doświadczenia" i „100% zadowolonych klientów" ustalił właściciel strony.
+- Opisy „Zakres prac" w kartach realizacji i grafiki usług (AI) są poglądowe - sprawdź, czy odpowiadają rzeczywistym pracom firmy.
+- Obraz `og:image` to `images/og-image-strzesak.png` (1200x630, ten sam co na strzesak.info; w grafice widnieje napis „MS BUDOWNICTWO”).
+- Nieużywane pliki (stare wersje filmów, `dummy`, `header-bg.jpg`, oryginały filmów) przeniesiono poza projekt do folderu archiwum na pulpicie.
