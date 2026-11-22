@@ -126,10 +126,10 @@
         <section class="hero">
             <div class="hero-bg" aria-hidden="true">
                 <picture><source srcset="images/hero-poster-video.webp" type="image/webp"><img class="hero-poster" src="images/hero-poster-video.jpg" alt="" loading="eager" fetchpriority="high"></picture>
-                <video class="hero-video-bg is-initial" muted playsinline preload="none" data-src="images/road-sequence-01-precise.mp4"></video>
-                <video class="hero-video-bg" muted playsinline preload="none" data-src="images/road-sequence-02-highway-v3.mp4"></video>
-                <video class="hero-video-bg" muted playsinline preload="none" data-src="images/road-sequence-03-drainage-v3.mp4"></video>
-                <video class="hero-video-bg" muted playsinline preload="none" data-src="images/road-sequence-04-roundabout-v4.mp4"></video>
+                <video class="hero-video-bg is-initial" muted playsinline webkit-playsinline preload="none" data-src="images/road-sequence-01-precise.mp4" data-src-mobile="images/road-sequence-01-precise-mobile.mp4"></video>
+                <video class="hero-video-bg" muted playsinline webkit-playsinline preload="none" data-src="images/road-sequence-02-highway-v3.mp4" data-src-mobile="images/road-sequence-02-highway-v3-mobile.mp4"></video>
+                <video class="hero-video-bg" muted playsinline webkit-playsinline preload="none" data-src="images/road-sequence-03-drainage-v3.mp4" data-src-mobile="images/road-sequence-03-drainage-v3-mobile.mp4"></video>
+                <video class="hero-video-bg" muted playsinline webkit-playsinline preload="none" data-src="images/road-sequence-04-roundabout-v4.mp4" data-src-mobile="images/road-sequence-04-roundabout-v4-mobile.mp4"></video>
             </div>
             <div class="hero-overlay"></div>
             <div class="container hero-content">
@@ -645,11 +645,14 @@
                 }
             });
 
-            // Hero: film w tle tylko na większych ekranach i bez ograniczenia ruchu
+            // Hero: film w tle bez ograniczenia ruchu i bez trybu oszczędzania danych
+            // Na telefonach (< 768 px) ładowane są lżejsze klipy 720p (data-src-mobile)
             // Cztery ujęcia połączone krótkim przenikaniem w 60-sekundową sekwencję
             const heroVideos = Array.from(document.querySelectorAll('.hero-video-bg'));
+            const isMobileHero = !window.matchMedia('(min-width: 768px)').matches;
+            const heroSaveData = navigator.connection && navigator.connection.saveData;
             const heroMotionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-                && window.matchMedia('(min-width: 768px)').matches;
+                && !heroSaveData;
             if (heroVideos.length > 0 && heroMotionOk) {
                 const FADE = 1.5; // sekundy
                 let active = 0;
@@ -657,11 +660,12 @@
                 const prepareVideo = v => {
                     if (v.src) return;
                     v.preload = 'auto';
-                    v.src = v.dataset.src;
+                    v.src = (isMobileHero && v.dataset.srcMobile) ? v.dataset.srcMobile : v.dataset.src;
                     v.load();
                 };
                 prepareVideo(heroVideos[0]);
-                if (heroVideos[1]) prepareVideo(heroVideos[1]);
+                // Na telefonie kolejny klip dołączamy dopiero tuż przed przejściem, żeby pierwszy ruszył szybciej
+                if (!isMobileHero && heroVideos[1]) prepareVideo(heroVideos[1]);
                 heroVideos[0].addEventListener('playing', () => {
                     heroVideos[0].classList.add('is-playing');
                     requestAnimationFrame(() => requestAnimationFrame(() => heroVideos[0].classList.remove('is-initial')));
@@ -671,6 +675,8 @@
                     const cur = heroVideos[active];
                     if (!cur.duration || transitioning) return;
                     if (cur.paused && !cur.ended) cur.play().catch(() => {});
+                    // Wczesne wczytanie następnego klipu (ważne na telefonie, gdzie startuje tylko pierwszy)
+                    if (cur.duration - cur.currentTime <= FADE + 6) prepareVideo(heroVideos[(active + 1) % heroVideos.length]);
                     if (cur.duration - cur.currentTime <= FADE || cur.ended) {
                         transitioning = true;
                         const nextIndex = (active + 1) % heroVideos.length;
