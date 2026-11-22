@@ -194,19 +194,32 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 
 /* ─── HERO (od krawędzi do krawędzi) ─────────────────── */
 .hero {
+    --hero-progress: 1; /* bez JS (lub przy ograniczeniu ruchu) treść jest od razu widoczna */
     position: relative;
-    isolation: isolate;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    min-height: 100vh;
-    min-height: 100svh;
     background: var(--asphalt);
     color: #fff;
-    padding-top: 120px;
 }
 
-.hero-bg { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
+/* Przypięta scena z wideo: stoi w miejscu, a treść (.hero-flow) najeżdża na nią podczas scrolla */
+.hero-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.hero-flow {
+    position: relative;
+    z-index: 1;
+    margin-top: -100vh;
+    margin-top: -100svh;
+    padding-top: 100vh;
+    padding-top: 100svh;
+}
+
+.hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
 
 .hero-poster,
 .hero-video-bg {
@@ -222,14 +235,83 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 .hero-video-bg.is-initial { transition: none; }
 .hero-video-bg.is-playing { opacity: 1; }
 
+/* Na starcie tylko lekka winieta (pod menu i pod podpisem); przyciemnienie narasta ze scrollem */
 .hero-overlay {
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: 1;
     overflow: hidden;
     background:
-        linear-gradient(90deg, rgba(15,18,21,0.82) 0%, rgba(15,18,21,0.45) 55%, rgba(15,18,21,0.2) 100%),
-        linear-gradient(to top, rgba(15,18,21,0.85) 0%, rgba(15,18,21,0) 40%);
+        linear-gradient(to bottom, rgba(15,18,21,0.5) 0%, rgba(15,18,21,0) 22%),
+        linear-gradient(to top, rgba(15,18,21,0.7) 0%, rgba(15,18,21,0) 30%);
+}
+
+.hero-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: var(--hero-progress);
+    background:
+        linear-gradient(90deg, rgba(15,18,21,0.82) 0%, rgba(15,18,21,0.5) 55%, rgba(15,18,21,0.3) 100%),
+        linear-gradient(to top, rgba(15,18,21,0.7) 0%, rgba(15,18,21,0) 45%);
+}
+
+.hero-intro-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 32px;
+    z-index: 2;
+}
+
+.hero-intro-inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.hero-intro-inner .eyebrow { margin-bottom: 0; }
+
+.hero-scroll-hint {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.hero-scroll-hint svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .hero-scroll-hint svg { animation: hero-hint-bounce 1.8s ease-in-out infinite; }
+}
+
+@keyframes hero-hint-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+.hero.is-scrolly .hero-intro-bar { opacity: calc(1 - var(--hero-progress) * 2); }
+.hero.is-scrolly.is-revealed .hero-intro-bar { pointer-events: none; }
+.hero:not(.is-scrolly) .hero-intro-bar { display: none; }
+
+.hero.is-scrolly .hero-content {
+    opacity: var(--hero-progress);
+    transform: translateY(calc((1 - var(--hero-progress)) * 28px));
 }
 
 .hero-content { width: 100%; padding-bottom: 56px; }
@@ -995,20 +1077,14 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
     .nav-menu a { padding: 14px 24px; font-size: 15px; border-radius: 0; }
     .nav-menu a.nav-btn { margin: 8px 16px 0; justify-content: center; border-radius: var(--radius-btn); }
 
-    .hero { padding-top: 64px; min-height: auto; }
-    .hero-bg, .hero-overlay { top: 0; bottom: 130px; height: auto; min-height: 0; max-height: none; }
-    .hero-poster, .hero-video-bg { object-position: center 30%; }
-    .hero-overlay {
-        background:
-            linear-gradient(180deg, rgba(15,18,21,0.55) 0%, rgba(15,18,21,0.12) 20%, rgba(15,18,21,0.14) 54%, rgba(15,18,21,0.74) 80%, var(--asphalt) 100%);
+    .hero-poster, .hero-video-bg { object-position: center 40%; }
+    .hero-overlay::after {
+        background: linear-gradient(180deg, rgba(15,18,21,0.45) 0%, rgba(15,18,21,0.6) 55%, rgba(15,18,21,0.78) 100%);
     }
-    .hero-content {
-        display: flex;
-        flex-direction: column;
-        padding-top: 22px;
-        padding-bottom: 24px;
-    }
-    .hero .eyebrow { margin-bottom: 33svh; font-size: 11px; }
+    .hero-intro-bar { bottom: 24px; }
+    .hero-intro-inner { align-items: flex-end; }
+    .hero-intro-inner .eyebrow { font-size: 11px; max-width: 70%; }
+    .hero-content { padding-bottom: 24px; }
     .hero h1 { font-size: clamp(34px, 9.2vw, 44px); letter-spacing: -1.5px; margin-bottom: 10px; }
     .hero .tagline { font-size: 15px; line-height: 1.45; margin-bottom: 18px; }
 
