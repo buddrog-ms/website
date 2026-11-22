@@ -124,6 +124,7 @@
 
         <!-- Hero -->
         <section class="hero">
+          <div class="hero-stage">
             <div class="hero-bg" aria-hidden="true">
                 <picture><source srcset="images/hero-poster-video.webp" type="image/webp"><img class="hero-poster" src="images/hero-poster-video.jpg" alt="" loading="eager" fetchpriority="high"></picture>
                 <video class="hero-video-bg is-initial" muted playsinline webkit-playsinline preload="none" data-src="images/road-sequence-01-precise.mp4" data-src-mobile="images/road-sequence-01-precise-mobile.mp4"></video>
@@ -132,8 +133,18 @@
                 <video class="hero-video-bg" muted playsinline webkit-playsinline preload="none" data-src="images/road-sequence-04-roundabout-v4.mp4" data-src-mobile="images/road-sequence-04-roundabout-v4-mobile.mp4"></video>
             </div>
             <div class="hero-overlay"></div>
+            <div class="hero-intro-bar">
+                <div class="container hero-intro-inner">
+                    <span class="eyebrow eyebrow-light">Infrastruktura drogowa i inżynieryjna</span>
+                    <a href="#about" class="hero-scroll-hint" id="heroScrollHint" aria-label="Przewiń w dół">
+                        <span>Przewiń</span>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                    </a>
+                </div>
+            </div>
+          </div>
+          <div class="hero-flow">
             <div class="container hero-content">
-                <span class="eyebrow eyebrow-light">Infrastruktura drogowa i inżynieryjna</span>
                 <h1>Mar-Buddróg</h1>
                 <p class="tagline">Profesjonalne usługi budowlane i infrastruktury drogowej</p>
                 <div class="hero-actions">
@@ -161,6 +172,7 @@
                     </div>
                 </div>
             </div>
+          </div>
         </section>
 
         <!-- About -->
@@ -644,6 +656,31 @@
                     1024: { slidesPerView: 3, spaceBetween: 24, grid: { rows: 2, fill: 'row' } }
                 }
             });
+
+            // Hero: najazd pod scrollem - na starcie czysty kadr wideo, tytuł i CTA wjeżdżają przy lekkim scrollu
+            const heroSection = document.querySelector('.hero');
+            const heroHint = document.getElementById('heroScrollHint');
+            if (heroSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                heroSection.classList.add('is-scrolly');
+                let heroTicking = false;
+                const updateHeroProgress = () => {
+                    heroTicking = false;
+                    const p = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.42)));
+                    heroSection.style.setProperty('--hero-progress', p.toFixed(3));
+                    heroSection.classList.toggle('is-revealed', p > 0.35);
+                };
+                window.addEventListener('scroll', () => {
+                    if (!heroTicking) { heroTicking = true; requestAnimationFrame(updateHeroProgress); }
+                }, { passive: true });
+                window.addEventListener('resize', updateHeroProgress);
+                updateHeroProgress();
+                if (heroHint) {
+                    heroHint.addEventListener('click', e => {
+                        e.preventDefault();
+                        window.scrollTo({ top: window.innerHeight * 0.5, behavior: 'smooth' });
+                    });
+                }
+            }
 
             // Hero: film w tle bez ograniczenia ruchu i bez trybu oszczędzania danych
             // Na telefonach (< 768 px) ładowane są lżejsze klipy 720p (data-src-mobile)
