@@ -995,14 +995,22 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
     .nav-menu a { padding: 14px 24px; font-size: 15px; border-radius: 0; }
     .nav-menu a.nav-btn { margin: 8px 16px 0; justify-content: center; border-radius: var(--radius-btn); }
 
-    .hero { padding-top: 96px; }
-    .hero h1 { letter-spacing: -1.5px; }
-    .hero-content { padding-bottom: 36px; }
+    .hero { padding-top: 64px; min-height: auto; }
+    .hero-bg, .hero-overlay { top: 64px; bottom: auto; height: 48svh; min-height: 310px; max-height: 430px; }
+    .hero-poster, .hero-video-bg { object-position: center 55%; }
+    .hero-overlay {
+        background:
+            linear-gradient(180deg, rgba(15,18,21,0.28) 0%, rgba(15,18,21,0) 22%, rgba(15,18,21,0) 68%, rgba(15,18,21,0.82) 92%, var(--asphalt) 100%);
+    }
+    .hero h1 { font-size: clamp(34px, 9.2vw, 44px); letter-spacing: -1.5px; margin-bottom: 10px; }
+    .hero .eyebrow { margin-bottom: 8px; font-size: 11px; }
+    .hero .tagline { font-size: 15px; line-height: 1.45; margin-bottom: 18px; }
+    .hero-content { padding-top: calc(48svh - 44px); padding-bottom: 22px; }
 
     .hero-stats { margin-bottom: -48px; }
-    #about { padding-top: 120px; }
+    #about { padding-top: 104px; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .stat-item { padding: 22px 12px; }
+    .stat-item { padding: 18px 12px; }
     .stat-item:nth-child(3) { border-left: none; }
     .stat-item:nth-child(n+3) { border-top: 1px solid var(--line); }
 
@@ -1023,8 +1031,8 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 }
 
 @media (max-width: 480px) {
-    .hero-actions { flex-direction: column; align-items: stretch; }
-    .btn { justify-content: center; }
+    .hero-actions { gap: 10px; }
+    .hero-actions .btn { flex: 1 1 auto; justify-content: center; padding: 13px 14px; font-size: 14px; gap: 8px; }
     .footer-inner { flex-direction: column; text-align: center; }
     .scroll-top { bottom: 16px; right: 16px; width: 42px; height: 42px; }
     .scroll-top svg { width: 20px; height: 20px; }
