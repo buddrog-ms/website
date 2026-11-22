@@ -66,6 +66,35 @@ if (dirArg) {
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 
+// Miniatury (600w, 1200w) skalujemy po SZEROKOŚCI - inaczej wysokie zdjęcia pionowe
+// byłyby ograniczone wysokością i wychodziły mniejsze (np. 280x600). Największy wariant (1920w)
+// ogranicza dłuższy bok do 1920 px (pełny podgląd w lightboxie).
+function resizeOptions(targetWidth) {
+    const isLargest = targetWidth === Math.max(...CONFIG.sizes);
+    return isLargest
+        ? { width: targetWidth, height: targetWidth, fit: 'inside', withoutEnlargement: true, kernel: sharp.kernel.lanczos3 }
+        : { width: targetWidth, withoutEnlargement: true, kernel: sharp.kernel.lanczos3 };
+}
+
+// Miniatury (wszystko poza największym wariantem) mają max. proporcje 1:1. Wysokie zdjęcia pionowe
+// przycinamy do kwadratu z oknem na ok. 40% wysokości (zgodnie z object-position: center 40% na stronie),
+// bo kafelki i tak pokazują tylko pas ok. 16:9. Pełny obraz jest w największym wariancie (lightbox).
+async function buildVariant(sourcePath, targetWidth) {
+    let img = sharp(sourcePath).rotate().resize(resizeOptions(targetWidth));
+    if (targetWidth === Math.max(...CONFIG.sizes)) return img;
+
+    const meta = await sharp(sourcePath).metadata();
+    const swap = meta.orientation && meta.orientation >= 5;
+    const srcW = swap ? meta.height : meta.width;
+    const srcH = swap ? meta.width : meta.height;
+    const outW = Math.min(targetWidth, srcW);
+    const outH = Math.round(srcH * outW / srcW);
+    if (outH > outW) {
+        img = img.extract({ left: 0, top: Math.round(0.4 * (outH - outW)), width: outW, height: outW });
+    }
+    return img;
+}
+
 async function ensureBackup(filePath) {
     if (!CONFIG.backupDir) return filePath;
     const rel = path.relative(path.join(PROJECT_ROOT, 'images'), filePath);
@@ -116,13 +145,7 @@ async function processFile(filePath) {
         if (CONFIG.generateWebp) {
             const webpName = `${targetWidth}w.webp`;
             const webpOutPath = path.join(targetDir, webpName);
-            await sharp(sourcePath)
-                .rotate() // Auto-orientacja EXIF
-                .resize(targetWidth, targetWidth, {
-                    fit: 'inside',
-                    withoutEnlargement: true,
-                    kernel: sharp.kernel.lanczos3,
-                })
+            await (await buildVariant(sourcePath, targetWidth)) // Auto-orientacja EXIF + skalowanie
                 .sharpen({ sigma: 0.8, m1: 0.5, m2: 2.0 }) // Filtry zwiększające ostrość miniatur
                 .webp({ quality: CONFIG.webpQuality, smartSubsample: true })
                 .toFile(webpOutPath);
@@ -141,13 +164,7 @@ async function processFile(filePath) {
         if (CONFIG.optimizeJpeg) {
             const jpgName = `${targetWidth}w.jpg`;
             const jpgOutPath = path.join(targetDir, jpgName);
-            await sharp(sourcePath)
-                .rotate()
-                .resize(targetWidth, targetWidth, {
-                    fit: 'inside',
-                    withoutEnlargement: true,
-                    kernel: sharp.kernel.lanczos3,
-                })
+            await (await buildVariant(sourcePath, targetWidth))
                 .sharpen({ sigma: 0.8, m1: 0.5, m2: 2.0 })
                 .jpeg({ quality: CONFIG.jpegQuality, mozjpeg: true })
                 .toFile(jpgOutPath);
