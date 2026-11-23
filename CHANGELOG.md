@@ -6,17 +6,17 @@ Ten plik opisuje, co zmieniło się względem obecnej wersji na https://www.strz
 
 ### Zmiany względem starej strony
 - Nowy układ jednostronicowy (one-page): nawigacja z podświetlaniem aktywnej sekcji, sekcje O nas / Usługi / Wybrane realizacje / Galeria / Kontakt.
-- Hero: sekwencja 4 filmów AI w tle (łącznie ok. 63 MB, H.264, 1920x1088) + poster `images/hero-poster-video.jpg`. Filmy ładują się tylko na ekranach od 768 px i bez `prefers-reduced-motion`. Materiały AI są ilustracyjne, nie przedstawiają prawdziwych realizacji firmy.
-- Usługi: 11 usług (jak na starej stronie) z grafikami `images/service-*.jpg` (AI, poglądowe).
+- Hero: sekwencja 4 filmów AI w tle (łącznie ok. 63 MB, H.264, 1920x1088) + poster `assets/images/hero/hero-poster-video.jpg`. Filmy ładują się tylko na ekranach od 768 px i bez `prefers-reduced-motion`. Materiały AI są ilustracyjne, nie przedstawiają prawdziwych realizacji firmy.
+- Usługi: 11 usług (jak na starej stronie) z grafikami `assets/images/services/*/` (AI, poglądowe).
 - Wybrane realizacje: 4 interaktywne karty-albumy + pełna galeria 36 prawdziwych zdjęć (Swiper + GLightbox, bez podpisów w powiększeniu).
 - Statystyki: 20+ lat, 500+ projektów, 1200 km, 100% zadowolonych klientów.
-- Zdjęcia: miniatury WebP/JPEG (600w i 1200w) w `<picture>`/`srcset` z `loading="lazy"` zamiast pełnych plików; pełny `1920w.webp` otwiera się dopiero w lightboxie. Ukryte slajdy albumów ładują się po załadowaniu strony lub przy interakcji. Źródła w `images/gallery/projectN/` (zdjęcia realizacji) oraz `images/service-*/` (usługi); poster hero ma wersję `hero-poster-video.webp`. Warianty generuje `utils/optimize-images.js` (sharp).
-- Hero na telefonach: klipy wideo grają także poniżej 768 px, z pionowych wersji 540x960 (9:16, kadr wycięty z oryginałów) `images/road-sequence-*-portrait.mp4` (ok. 1,3-2,2 MB każda, łącznie ok. 7,5 MB), wskazywanych atrybutem `data-src-mobile`. Na telefonie pierwszy klip startuje sam, kolejne dołączają się chwilę przed przejściem. Klipy nie ładują się przy włączonym `prefers-reduced-motion` ani trybie oszczędzania danych (`saveData`) - wtedy widać statyczny poster. Hero (desktop i telefon) działa jak "najazd pod scrollem": wideo jest przypięte (`.hero-stage`, `position: sticky`), na starcie widać czysty kadr z małym podpisem "Infrastruktura drogowa i inżynieryjna" i wskaźnikiem "Przewiń", a przy lekkim scrollu (ok. 42% wysokości ekranu) przyciemnienie narasta i na wideo wjeżdżają tytuł, przyciski i karta statystyk (`.hero-flow`). Postęp animacji to zmienna CSS `--hero-progress` ustawiana w skrypcie w `index.html`. Przy `prefers-reduced-motion` lub bez JS treść jest od razu widoczna, a wskaźnik "Przewiń" ukryty.
+- Zdjęcia: miniatury WebP/JPEG (600w i 1200w) w `<picture>`/`srcset` z `loading="lazy"` zamiast pełnych plików; pełny `1920w.webp` otwiera się dopiero w lightboxie. Ukryte slajdy albumów ładują się po załadowaniu strony lub przy interakcji. Warianty w `assets/images/gallery/projectN/` (zdjęcia realizacji) oraz `assets/images/services/*/` (usługi); oryginały i nieużywane pliki leżą w `_archive/`; poster hero ma wersję `hero-poster-video.webp`. Warianty generuje `utils/optimize-images.js` (sharp).
+- Hero na telefonach: klipy wideo grają także poniżej 768 px, z pionowych wersji 540x960 (9:16, kadr wycięty z oryginałów) `assets/video/hero/road-sequence-*-portrait.mp4` (ok. 1,3-2,2 MB każda, łącznie ok. 7,5 MB), wskazywanych atrybutem `data-src-mobile`. Na telefonie pierwszy klip startuje sam, kolejne dołączają się chwilę przed przejściem. Klipy nie ładują się przy włączonym `prefers-reduced-motion` ani trybie oszczędzania danych (`saveData`) - wtedy widać statyczny poster. Hero (desktop i telefon) działa jak "najazd pod scrollem": wideo jest przypięte (`.hero-stage`, `position: sticky`), na starcie widać czysty kadr z małym podpisem "Infrastruktura drogowa i inżynieryjna" i wskaźnikiem "Przewiń", a przy lekkim scrollu (ok. 42% wysokości ekranu) przyciemnienie narasta i na wideo wjeżdżają tytuł, przyciski i karta statystyk (`.hero-flow`). Postęp animacji to zmienna CSS `--hero-progress` ustawiana w skrypcie w `index.html`. Przy `prefers-reduced-motion` lub bez JS treść jest od razu widoczna, a wskaźnik "Przewiń" ukryty.
 - Strzałka "wróć na górę" w nowym wyglądzie; kliknięcie w logo przeładowuje stronę na czysty adres `/`.
 
 ### Zachowane elementy identyfikacyjne ze starej strony
-- Favicon: `images/favicon-ms-strzesak.png`.
-- Obraz podglądu linku (og:image 1200x630): `images/og-image-strzesak.png` (na grafice napis "MS BUDOWNICTWO" - tak jak na starej stronie).
+- Favicon: `assets/images/branding/favicon-ms-strzesak.png`.
+- Obraz podglądu linku (og:image 1200x630): `assets/images/branding/og-image-strzesak.png` (na grafice napis "MS BUDOWNICTWO" - tak jak na starej stronie).
 - Dane kontaktowe: Marcin Strzesak, Tonia 84, 33-200 Bolesław, +48 534 340 400, m.buddrog@gmail.com, Pon-Pt 8:00-17:00.
 - Facebook: https://www.facebook.com/marbuddrog (kafelek w sekcji Kontakt oraz `sameAs` w JSON-LD).
 - Stopka: "Strona wykonana przez SouthWay".
@@ -39,7 +39,7 @@ Nie ma też starych katalogów zdjęć (`images/gallery/...`, `images/realizatio
 
 ## Checklista przy podmianie strony na hostingu
 1. Zrób kopię zapasową obecnej strony z serwera.
-2. Wdrożenie na cPanel robi `.cpanel.yml` po wypchnięciu na gałąź `production` (kopiuje `index.html`, `style.css`, `robots.txt`, `sitemap.xml`, `.htaccess`, `images/`, `.well-known/`). Przy ręcznym wgraniu pamiętaj o ukrytym pliku `.htaccess` (część klientów FTP go pomija).
+2. Wdrożenie na cPanel robi `.cpanel.yml` po wypchnięciu na gałąź `production` (kopiuje `index.html`, `style.css`, `robots.txt`, `sitemap.xml`, `.htaccess`, `assets/`, `.well-known/`; katalog `_archive/` nie jest kopiowany). Po tej zmianie struktury na hostingu zostaje stary, już nieużywany katalog `images/` - można go usunąć ręcznie. Przy ręcznym wgraniu pamiętaj o ukrytym pliku `.htaccess` (część klientów FTP go pomija).
 3. Sprawdź, czy `.htaccess` działa (hosting musi mieć Apache/LiteSpeed z mod_rewrite/mod_alias): wejdź na `https://www.strzesak.info/project/drenaze` - powinno przekierować na stronę główną (sekcja realizacji). Jeśli hosting to nie Apache (np. nginx), przekierowanie trzeba ustawić w panelu hostingu.
 4. Sprawdź `https://www.strzesak.info/sitemap.xml` i `https://www.strzesak.info/robots.txt`.
 5. Odtwórz filmy w hero (pliki ~13-20 MB każdy); serwer powinien obsługiwać żądania Range.
