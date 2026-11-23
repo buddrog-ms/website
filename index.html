@@ -694,11 +694,26 @@
                 const FADE = 1.5; // sekundy
                 let active = 0;
                 let transitioning = false;
+                // Wyciszenie ustawiane też jako właściwość - część przeglądarek mobilnych tylko wtedy zezwala na autoodtwarzanie
+                const kickVideo = v => {
+                    v.muted = true;
+                    v.defaultMuted = true;
+                    v.playsInline = true;
+                    const p = v.play();
+                    if (p && p.catch) p.catch(() => {});
+                };
                 const prepareVideo = v => {
                     if (v.src) return;
                     v.preload = 'auto';
+                    v.muted = true;
+                    v.defaultMuted = true;
+                    v.playsInline = true;
                     v.src = (isMobileHero && v.dataset.srcMobile) ? v.dataset.srcMobile : v.dataset.src;
                     v.load();
+                    // Gdy film jest gotowy, a stoi (np. pierwsze wejście na wolnej sieci), uruchom go
+                    v.addEventListener('canplay', () => {
+                        if (v === heroVideos[active] && v.paused && !v.ended) kickVideo(v);
+                    });
                 };
                 prepareVideo(heroVideos[0]);
                 // Na telefonie kolejny klip dołączamy dopiero tuż przed przejściem, żeby pierwszy ruszył szybciej
@@ -707,11 +722,32 @@
                     heroVideos[0].classList.add('is-playing');
                     requestAnimationFrame(() => requestAnimationFrame(() => heroVideos[0].classList.remove('is-initial')));
                 }, { once: true });
-                heroVideos[0].play().catch(() => {});
+                kickVideo(heroVideos[0]);
+
+                // Zabezpieczenie na pierwsze wejście: jeśli pierwszy klip nie ruszył, ponów wczytanie i start
+                // (wcześniej pomagało dopiero odświeżenie strony)
+                [2500, 6000, 12000].forEach(delay => setTimeout(() => {
+                    const first = heroVideos[0];
+                    if (active === 0 && !first.classList.contains('is-playing') && (first.paused || first.currentTime === 0)) {
+                        first.load();
+                        kickVideo(first);
+                    }
+                }, delay));
+
+                // Dotyk, przewinięcie lub kliknięcie to gest użytkownika - jeśli film stoi, uruchom go
+                const resumeOnGesture = () => {
+                    const cur = heroVideos[active];
+                    if (cur && cur.paused && !cur.ended && !transitioning) kickVideo(cur);
+                };
+                ['touchstart', 'pointerdown', 'scroll', 'click', 'keydown'].forEach(evt =>
+                    window.addEventListener(evt, resumeOnGesture, { passive: true }));
+                document.addEventListener('visibilitychange', () => { if (!document.hidden) resumeOnGesture(); });
+
                 setInterval(() => {
                     const cur = heroVideos[active];
-                    if (!cur.duration || transitioning) return;
-                    if (cur.paused && !cur.ended) cur.play().catch(() => {});
+                    if (transitioning) return;
+                    if (cur.paused && !cur.ended && cur.readyState >= 2) kickVideo(cur);
+                    if (!cur.duration) return;
                     // Wczesne wczytanie następnego klipu (ważne na telefonie, gdzie startuje tylko pierwszy)
                     if (cur.duration - cur.currentTime <= FADE + 6) prepareVideo(heroVideos[(active + 1) % heroVideos.length]);
                     if (cur.duration - cur.currentTime <= FADE || cur.ended) {

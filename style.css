@@ -211,6 +211,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 }
 
 .hero-flow {
+    display: flow-root; /* ujemny margines karty statystyk zmniejsza sekcję, a karta wystaje w dół: dokładnie na styku sekcji */
     position: relative;
     z-index: 1;
     margin-top: -100vh;
@@ -378,7 +379,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 .btn-ghost:hover .play { background: var(--yellow); }
 
 /* Statystyki: biała karta na styku hero i następnej sekcji, pomarańczowy akcent */
-.hero-stats { position: relative; z-index: 2; width: 100%; margin-bottom: -64px; }
+.hero-stats { position: relative; z-index: 2; width: 100%; margin-bottom: -80px; }
 
 .stats-grid {
     display: grid;
@@ -429,7 +430,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 /* ─── SECTIONS ───────────────────────────────────────── */
 .section { padding: 112px 0; }
 .section-light { background-color: #fff; }
-#about { padding-top: 176px; }
+#about { padding-top: 192px; }
 .section-alt { background-color: var(--concrete); }
 .section-dark { background-color: var(--asphalt); color: #fff; }
 
@@ -1088,8 +1089,8 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
     .hero h1 { font-size: clamp(34px, 9.2vw, 44px); letter-spacing: -1.5px; margin-bottom: 10px; }
     .hero .tagline { font-size: 15px; line-height: 1.45; margin-bottom: 18px; }
 
-    .hero-stats { margin-bottom: -48px; }
-    #about { padding-top: 104px; }
+    .hero-stats { margin-bottom: -132px; }
+    #about { padding-top: 188px; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
     .stat-item { padding: 18px 12px; }
     .stat-item:nth-child(3) { border-left: none; }
