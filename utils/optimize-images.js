@@ -3,7 +3,7 @@
  *
  * Skrypt do optymalizacji zdjęć na potrzeby strony www.
  * Wykonuje następujące operacje:
- *   1. Backup oryginałów do images/originals/
+ *   1. Backup oryginałów do _archive/images/originals/
  *   2. Auto-rotację na podstawie EXIF metadata (.rotate())
  *   3. Generowanie wersji wielorozdzielczościowych (600w, 1200w, 1920w) w WebP oraz JPEG
  *   4. Generowanie domyślnego pliku .webp i .jpg
@@ -15,7 +15,7 @@
  *   node utils/optimize-images.js
  *   node utils/optimize-images.js --webp-only
  *   node utils/optimize-images.js --jpeg-only
- *   node utils/optimize-images.js --dir images/gallery
+ *   node utils/optimize-images.js --dir assets/images/gallery
  */
 
 const sharp = require('sharp');
@@ -25,16 +25,10 @@ const path = require('path');
 // ─── KONFIGURACJA ────────────────────────────────────────────────────────────
 const CONFIG = {
     inputDirs: [
-        'images/gallery',
-        'images/realizations/building-demolition/photos',
-        'images/realizations/drenaze/photos',
-        'images/realizations/material-transport/photos',
-        'images/realizations/road-modernization/photos',
-        'images/realizations/snow-removal/photos',
-        'images/background',
+        'assets/images/gallery',
     ],
 
-    backupDir: 'images/originals',
+    backupDir: '_archive/images/originals',
 
     // Rozdzielczości w pikselach dla srcset
     sizes: [600, 1200, 1920],
@@ -97,7 +91,7 @@ async function buildVariant(sourcePath, targetWidth) {
 
 async function ensureBackup(filePath) {
     if (!CONFIG.backupDir) return filePath;
-    const rel = path.relative(path.join(PROJECT_ROOT, 'images'), filePath);
+    const rel = path.relative(path.join(PROJECT_ROOT, 'assets/images'), filePath);
     const backupPath = path.join(PROJECT_ROOT, CONFIG.backupDir, rel);
     
     // Jeśli to już plik wygenerowany wariantu (np -600w), pomiń
@@ -133,7 +127,7 @@ async function processFile(filePath) {
     const results = [];
     const dirName = path.dirname(filePath);
 
-    // Dedykowany podkatalog dla danego obrazu, np. images/gallery/project1/
+    // Dedykowany podkatalog dla danego obrazu, np. assets/images/gallery/project1/
     const targetDir = path.join(dirName, baseName);
     fs.mkdirSync(targetDir, { recursive: true });
 
