@@ -729,7 +729,6 @@
                 [2500, 6000, 12000].forEach(delay => setTimeout(() => {
                     const first = heroVideos[0];
                     if (active === 0 && !first.classList.contains('is-playing') && (first.paused || first.currentTime === 0)) {
-                        first.load();
                         kickVideo(first);
                     }
                 }, delay));
@@ -739,7 +738,8 @@
                     const cur = heroVideos[active];
                     if (cur && cur.paused && !cur.ended && !transitioning) kickVideo(cur);
                 };
-                ['touchstart', 'pointerdown', 'scroll', 'click', 'keydown'].forEach(evt =>
+                // touchend/pointerup/click to gesty uznawane za aktywację użytkownika (touchstart i scroll nie zawsze)
+                ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'scroll', 'click', 'keydown'].forEach(evt =>
                     window.addEventListener(evt, resumeOnGesture, { passive: true }));
                 document.addEventListener('visibilitychange', () => { if (!document.hidden) resumeOnGesture(); });
 
