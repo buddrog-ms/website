@@ -760,6 +760,25 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 .project-card h3 { color: var(--asphalt); font-size: 20px; margin-bottom: 12px; }
 .project-description { color: var(--muted); font-size: 15px; line-height: 1.7; }
 
+.project-desc-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--asphalt);
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+.project-desc-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.2s ease; }
+.project-desc-toggle:hover { color: var(--yellow-dark); }
+.project-desc-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.project-desc-toggle + .project-description { display: none; margin-top: 10px; }
+.project-card.is-desc-open .project-desc-toggle + .project-description { display: block; }
+
 /* Gallery */
 .gallery-swiper { position: relative; padding: 0 0 40px 0; }
 
@@ -1109,7 +1128,9 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 
 /* ─── USŁUGI: zwijana lista (pierwsze karty + przycisk „Pokaż wszystkie”) ─── */
 #services.is-collapsed .service-box:nth-child(n+7) { display: none; }
-.services-more-btn {
+#projects.is-collapsed .project-card:nth-child(n+3) { display: none; }
+.services-more-btn,
+.projects-more-btn {
     display: block;
     margin: 32px auto 0;
     padding: 14px 32px;
@@ -1124,11 +1145,13 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 
 @media (max-width: 768px) {
     #services.is-collapsed .service-box:nth-child(n+5) { display: none; }
+    #projects.is-collapsed .project-card:nth-child(n+2) { display: none; }
     #services .service-box { min-height: 170px; }
     #services .service-body { padding: 20px 18px; }
     #services .service-box h3 { font-size: 20px; margin-bottom: 6px; }
     #services .service-box p { font-size: 13.5px; }
-    .services-more-btn { width: 100%; margin-top: 16px; padding: 14px 18px; }
+    .services-more-btn,
+    .projects-more-btn { width: 100%; margin-top: 16px; padding: 14px 18px; }
 }
 
 /* ─── Efekty głębi ─── */
@@ -1201,7 +1224,7 @@ body.depth-sheets #about { position: relative; }
 
 @media (max-width: 768px) {
     body.depth-sheets :is(#services, #projects, #gallery, #contact) { margin-top: -28px; border-radius: 28px 28px 0 0; }
-    body.depth-words [data-depth-word]::before { font-size: clamp(36px, 12vw, 90px); top: -1em; left: auto; right: 0; }
+    body.depth-words [data-depth-word]::before { font-size: clamp(36px, 12vw, 90px); top: -0.85em; left: var(--wl, 0.15em); right: auto; text-align: left; }
 }
 
 @media (prefers-reduced-motion: reduce) {
