@@ -668,16 +668,26 @@
 
             cards.forEach(card => {
                 const desc = card.querySelector('.project-description');
-                if (!desc) return;
+                const content = card.querySelector('.project-card-content');
+                if (!desc || !content) return;
                 const toggle = document.createElement('button');
                 toggle.type = 'button';
                 toggle.className = 'project-desc-toggle';
                 toggle.setAttribute('aria-expanded', 'false');
                 toggle.innerHTML = '<span>Pokaż opis</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
-                toggle.addEventListener('click', () => {
+                const toggleDesc = () => {
                     const open = card.classList.toggle('is-desc-open');
                     toggle.setAttribute('aria-expanded', String(open));
                     toggle.firstElementChild.textContent = open ? 'Ukryj opis' : 'Pokaż opis';
+                };
+                toggle.addEventListener('click', e => {
+                    e.stopPropagation();
+                    toggleDesc();
+                });
+                content.addEventListener('click', e => {
+                    if (e.target.closest('[data-open-gallery]')) return;
+                    if (window.getSelection && window.getSelection().toString()) return;
+                    toggleDesc();
                 });
                 desc.insertAdjacentElement('beforebegin', toggle);
             });
