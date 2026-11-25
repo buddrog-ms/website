@@ -564,7 +564,6 @@
                         <div class="swiper-slide gallery-slide"><a href="assets/images/gallery/project35/1920w.webp" class="gallery-item glightbox" data-gallery="gallery" aria-label="Powiększ zdjęcie 35"><picture><source srcset="assets/images/gallery/project35/600w.webp 600w, assets/images/gallery/project35/1200w.webp 1200w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 380px" type="image/webp"><img src="assets/images/gallery/project35/600w.jpg" srcset="assets/images/gallery/project35/600w.jpg 600w, assets/images/gallery/project35/1200w.jpg 1200w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 380px" alt="Realizacja Mar-Buddróg – zdjęcie 35" loading="lazy" decoding="async"></picture><span class="gallery-zoom"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg></span></a></div>
                         <div class="swiper-slide gallery-slide"><a href="assets/images/gallery/project36/1920w.webp" class="gallery-item glightbox" data-gallery="gallery" aria-label="Powiększ zdjęcie 36"><picture><source srcset="assets/images/gallery/project36/600w.webp 600w, assets/images/gallery/project36/1200w.webp 1200w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 380px" type="image/webp"><img src="assets/images/gallery/project36/600w.jpg" srcset="assets/images/gallery/project36/600w.jpg 600w, assets/images/gallery/project36/1200w.jpg 1200w" sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 380px" alt="Realizacja Mar-Buddróg – zdjęcie 36" loading="lazy" decoding="async"></picture><span class="gallery-zoom"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6"/><path d="M8 11h6"/></svg></span></a></div>
                     </div>
-                    <div class="swiper-pagination"></div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
                 </div>
@@ -658,53 +657,33 @@
             }
         })();
     </script>
-    <!-- PODGLĄD: wrażenie głębi – panel „Głębia – podgląd” włącza/wyłącza 5 efektów (do usunięcia po wyborze) -->
+    <!-- Efekty głębi: cienie, pochylenie 3D kart, napisy w tle, nakładające się sekcje -->
     <script>
         (function () {
             const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
             const body = document.body;
 
-            const options = [
-                ['depth-shadows', 'Cienie i warstwy', 'Miękkie, wielowarstwowe cienie kart, zdjęć i przycisków oraz jasna krawędź na ciemnych kartach. Na laptopie karta po najechaniu unosi się.'],
-                ['depth-tilt', 'Pochylenie 3D kart', 'Karty usług i filary lekko obracają się w stronę kursora. Tylko laptop z myszką, na telefonie wyłączone.'],
-                ['depth-words', 'Napisy w tle', 'Duże, bardzo blade nazwy sekcji (O NAS, USŁUGI, REALIZACJE, GALERIA) leżą za nagłówkiem, zanikają ku dołowi i dryfują wolniej niż treść.'],
-                ['depth-sheets', 'Nakładające się sekcje', 'Sekcje wyglądają jak arkusze leżące jeden na drugim: zaokrąglone górne rogi i cień rzucany na poprzednią sekcję.']
-            ];
-            options.forEach(o => body.classList.add(o[0]));
+            ['depth-shadows', 'depth-tilt', 'depth-words', 'depth-sheets'].forEach(c => body.classList.add(c));
 
-            const words = { about: 'O NAS', services: 'USŁUGI', projects: 'REALIZACJE', gallery: 'GALERIA' };
-            Object.keys(words).forEach(id => { const s = document.getElementById(id); if (s) s.setAttribute('data-depth-word', words[id]); });
-
-            // Panel
-            const panel = document.createElement('div');
-            panel.className = 'depth-panel';
-            panel.innerHTML = '<div class="depth-panel-body"><div class="depth-panel-title">Głębia – podgląd (włącz / wyłącz)</div>' +
-                options.map(o => '<label class="depth-opt"><input type="checkbox" data-cls="' + o[0] + '" checked><b>' + o[1] + '</b><span>' + o[2] + '</span></label>').join('') +
-                '</div><button type="button" class="depth-panel-toggle" aria-expanded="false">Głębia – podgląd</button>';
-            document.body.appendChild(panel);
-            const toggle = panel.querySelector('.depth-panel-toggle');
-            toggle.addEventListener('click', () => {
-                const open = panel.classList.toggle('is-open');
-                toggle.setAttribute('aria-expanded', String(open));
-            });
-            panel.addEventListener('change', e => {
-                const cb = e.target.closest('input[data-cls]');
-                if (!cb) return;
-                body.classList.toggle(cb.dataset.cls, cb.checked);
-                schedule();
+            // Napisy w tle: nazwa sekcji kotwiczona do bloku z nagłówkiem (w każdej sekcji w tej samej relacji do tytułu)
+            const words = { about: ['O NAS', 'h2'], services: ['USŁUGI', 'h2'], projects: ['REALIZACJE', 'h2'], gallery: ['GALERIA', 'h2'] };
+            Object.keys(words).forEach(id => {
+                const el = document.querySelector('#' + id + ' ' + words[id][1]);
+                if (el) el.setAttribute('data-depth-word', words[id][0]);
             });
 
             // Napisy w tle: powolny dryf względem treści (jedna pętla rAF przy scrollu)
-            const wordSections = Array.from(document.querySelectorAll('[data-depth-word]'));
+            const wordHeads = Array.from(document.querySelectorAll('[data-depth-word]'));
             let ticking = false;
             const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
             function update() {
                 ticking = false;
                 if (reduce || !body.classList.contains('depth-words')) return;
                 const vh = window.innerHeight;
-                wordSections.forEach(s => {
-                    const r = s.getBoundingClientRect();
+                wordHeads.forEach(s => {
+                    const sec = s.closest('section') || s;
+                    const r = sec.getBoundingClientRect();
                     if (r.bottom < 0 || r.top > vh) return;
                     const off = r.top + r.height / 2 - vh / 2;
                     s.style.setProperty('--wy', clamp(off * -0.1, -70, 70).toFixed(1) + 'px');
@@ -761,7 +740,6 @@
                 slidesPerView: 1,
                 spaceBetween: 12,
                 grid: { rows: 3, fill: 'row' },
-                pagination: { el: '.swiper-pagination', type: 'progressbar' },
                 navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
                 breakpoints: {
                     768: { slidesPerView: 2, spaceBetween: 16, grid: { rows: 2, fill: 'row' } },

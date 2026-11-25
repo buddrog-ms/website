@@ -808,19 +808,6 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 .gallery-item:hover .gallery-zoom,
 .gallery-item:focus-visible .gallery-zoom { opacity: 1; }
 
-.swiper-pagination-progressbar {
-    top: auto !important;
-    bottom: 0 !important;
-    height: 4px !important;
-    border-radius: 4px;
-    background: var(--line) !important;
-}
-
-.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
-    background: var(--asphalt) !important;
-    border-radius: 4px;
-}
-
 .swiper-button-prev,
 .swiper-button-next {
     color: var(--asphalt) !important;
@@ -1144,42 +1131,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
     .services-more-btn { width: 100%; margin-top: 16px; padding: 14px 18px; }
 }
 
-/* ─── PODGLĄD: wrażenie głębi (5 efektów, włączane panelem „Głębia – podgląd”; do wyboru, reszta do usunięcia) ─── */
-
-/* Panel podglądu */
-.depth-panel { position: fixed; left: 16px; bottom: 16px; z-index: 9999; font-family: var(--font-body); }
-.depth-panel-toggle {
-    display: block;
-    padding: 10px 16px;
-    background: var(--yellow);
-    color: var(--asphalt);
-    border: 0;
-    border-radius: 999px;
-    font: inherit;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-}
-.depth-panel-body {
-    display: none;
-    width: min(92vw, 360px);
-    max-height: 70vh;
-    overflow-y: auto;
-    margin-bottom: 10px;
-    padding: 14px;
-    background: #fff;
-    color: var(--text);
-    border-radius: 14px;
-    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-}
-.depth-panel.is-open .depth-panel-body { display: block; }
-.depth-panel-title { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--yellow-dark); margin-bottom: 8px; }
-.depth-opt { display: grid; grid-template-columns: 22px 1fr; gap: 2px 8px; padding: 10px 0; border-top: 1px solid var(--line); cursor: pointer; }
-.depth-opt:first-of-type { border-top: 0; }
-.depth-opt input { grid-row: 1 / span 2; margin-top: 3px; width: 18px; height: 18px; accent-color: var(--yellow-dark); }
-.depth-opt b { font-size: 14px; line-height: 1.3; }
-.depth-opt span { font-size: 12.5px; line-height: 1.45; color: var(--muted); }
+/* ─── Efekty głębi ─── */
 
 /* Wspólne przejścia kart (żeby cień, uniesienie i pochylenie działały razem z wejściem .reveal) */
 :is(body.depth-shadows, body.depth-tilt) :is(.service-box, .project-card, .pillar-box) {
@@ -1215,30 +1167,28 @@ body.depth-shadows .stats-grid { box-shadow: 0 2px 6px rgba(15,18,21,0.12), 0 18
 /* 3. Pochylenie 3D kart (kąt ustawia skrypt; perspektywa na rodzicach) */
 body.depth-tilt :is(.services-grid, .pillars-grid) { perspective: 1100px; }
 
-/* 4. Napisy w tle: duże, blade nazwy sekcji za nagłówkiem, zanikające ku dołowi, dryfujące wolniej niż treść */
+/* 4. Napisy w tle: duża, blada nazwa sekcji kotwiczona do bloku z nagłówkiem, zanikająca ku dołowi, dryfująca wolniej niż treść */
 body.depth-words :is(#about, #services, #projects, #gallery) { position: relative; overflow-x: clip; }
-body.depth-words :is(#about, #services, #projects, #gallery)::before {
+body.depth-words [data-depth-word] { position: relative; isolation: isolate; }
+body.depth-words [data-depth-word]::before {
     content: attr(data-depth-word);
     position: absolute;
-    top: 36px;
-    left: max(24px, calc((100vw - 1280px) / 2 + 24px));
-    z-index: 0;
+    z-index: -1;
+    top: -0.4em;
+    left: 0.35em;
     font-family: var(--font-head);
-    font-size: clamp(44px, 12vw, 200px);
+    font-size: clamp(72px, 12vw, 200px);
     font-weight: 800;
-    line-height: 0.9;
-    letter-spacing: -0.04em;
+    line-height: 1;
+    letter-spacing: -0.03em;
     white-space: nowrap;
-    color: rgba(15,18,21,0.03);
-    -webkit-text-stroke: 1.5px rgba(15,18,21,0.09);
-    -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 95%);
-    mask-image: linear-gradient(to bottom, #000 25%, transparent 95%);
+    color: rgba(15,18,21,0.045);
+    -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 35%, transparent 100%);
     translate: var(--wx, 0px) var(--wy, 0px);
     pointer-events: none;
 }
-body.depth-words #about::before { top: 120px; }
-body.depth-words #services::before { color: rgba(255,255,255,0.03); -webkit-text-stroke-color: rgba(255,255,255,0.1); }
-body.depth-words :is(#about, #services, #projects, #gallery) > .container { position: relative; z-index: 1; }
+body.depth-words #services [data-depth-word]::before { color: rgba(255,255,255,0.09); }
 
 /* 5. Sekcje jak nachodzące arkusze: zaokrąglone górne rogi, cień na poprzednią sekcję */
 body.depth-sheets :is(#services, #projects, #gallery, #contact) {
@@ -1251,12 +1201,11 @@ body.depth-sheets #about { position: relative; }
 
 @media (max-width: 768px) {
     body.depth-sheets :is(#services, #projects, #gallery, #contact) { margin-top: -28px; border-radius: 28px 28px 0 0; }
-    body.depth-words :is(#about, #services, #projects, #gallery)::before { top: 28px; -webkit-text-stroke-width: 1px; }
-    body.depth-words #about::before { top: 100px; }
+    body.depth-words [data-depth-word]::before { font-size: clamp(44px, 15vw, 90px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    body.depth-words :is(#about, #services, #projects, #gallery)::before { translate: none; }
+    body.depth-words [data-depth-word]::before { translate: none; }
     :is(body.depth-shadows, body.depth-tilt) :is(.service-box, .project-card, .pillar-box):hover { translate: none; rotate: none; }
 }
 
@@ -1291,20 +1240,7 @@ body.depth-sheets #about { position: relative; }
 .gallery-item:focus-visible .gallery-zoom svg { transform: scale(1); }
 .gallery-item:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
 
-.swiper.gallery-swiper { padding-bottom: 56px; }
-.swiper-pagination-progressbar {
-    left: 50% !important;
-    width: min(360px, 70%) !important;
-    transform: translateX(-50%);
-    bottom: 14px !important;
-    height: 6px !important;
-    background: rgba(15,18,21,0.12) !important;
-}
-.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
-    background: var(--yellow) !important;
-    box-shadow: 0 0 10px rgba(242,169,0,0.5);
-}
-
+.swiper.gallery-swiper { padding-bottom: 24px; }
 @media (prefers-reduced-motion: reduce) {
     .gallery-item { animation: none; }
 }
