@@ -667,9 +667,8 @@
 
             const options = [
                 ['depth-shadows', 'Cienie i warstwy', 'Miękkie, wielowarstwowe cienie kart, zdjęć i przycisków oraz jasna krawędź na ciemnych kartach. Na laptopie karta po najechaniu unosi się.'],
-                ['depth-parallax', 'Parallax zdjęć', 'Zdjęcia w kartach usług, w sekcji O nas i w galerii przesuwają się wolniej niż strona przy przewijaniu, jakby leżały głębiej.'],
-                ['depth-tilt', 'Pochylenie 3D kart', 'Karty usług, realizacji i filary lekko obracają się w stronę kursora. Tylko laptop z myszką, na telefonie wyłączone.'],
-                ['depth-words', 'Napisy w tle', 'Duże, bardzo blade kontury nazw sekcji (O NAS, USŁUGI, REALIZACJE, GALERIA) płyną za treścią z inną prędkością niż reszta.'],
+                ['depth-tilt', 'Pochylenie 3D kart', 'Karty usług i filary lekko obracają się w stronę kursora. Tylko laptop z myszką, na telefonie wyłączone.'],
+                ['depth-words', 'Napisy w tle', 'Duże, bardzo blade nazwy sekcji (O NAS, USŁUGI, REALIZACJE, GALERIA) leżą za nagłówkiem, zanikają ku dołowi i dryfują wolniej niż treść.'],
                 ['depth-sheets', 'Nakładające się sekcje', 'Sekcje wyglądają jak arkusze leżące jeden na drugim: zaokrąglone górne rogi i cień rzucany na poprzednią sekcję.']
             ];
             options.forEach(o => body.classList.add(o[0]));
@@ -693,36 +692,24 @@
                 const cb = e.target.closest('input[data-cls]');
                 if (!cb) return;
                 body.classList.toggle(cb.dataset.cls, cb.checked);
-                if (cb.dataset.cls === 'depth-parallax' && !cb.checked) document.querySelectorAll('[style*="--py"]').forEach(el => el.style.removeProperty('--py'));
                 schedule();
             });
 
-            // Parallax zdjęć + napisów w tle (jedna pętla rAF przy scrollu)
-            const imgs = Array.from(document.querySelectorAll('.about-photo img, .service-bg, .gallery-item img'));
+            // Napisy w tle: powolny dryf względem treści (jedna pętla rAF przy scrollu)
             const wordSections = Array.from(document.querySelectorAll('[data-depth-word]'));
             let ticking = false;
+            const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
             function update() {
                 ticking = false;
-                if (reduce) return;
+                if (reduce || !body.classList.contains('depth-words')) return;
                 const vh = window.innerHeight;
-                if (body.classList.contains('depth-parallax')) {
-                    imgs.forEach(img => {
-                        const box = img.closest('.service-box, .gallery-item, .about-photo') || img.parentElement;
-                        const r = box.getBoundingClientRect();
-                        if (r.bottom < -50 || r.top > vh + 50) return;
-                        const limit = r.height * 0.09;
-                        const off = (r.top + r.height / 2 - vh / 2) * -0.08;
-                        img.style.setProperty('--py', Math.max(-limit, Math.min(limit, off)).toFixed(1) + 'px');
-                    });
-                }
-                if (body.classList.contains('depth-words')) {
-                    wordSections.forEach(s => {
-                        const r = s.getBoundingClientRect();
-                        if (r.bottom < 0 || r.top > vh) return;
-                        const max = Math.max(0, Math.min(s.offsetHeight - 320, 420));
-                        s.style.setProperty('--wy', Math.max(0, Math.min(max, -r.top * 0.22)).toFixed(1) + 'px');
-                    });
-                }
+                wordSections.forEach(s => {
+                    const r = s.getBoundingClientRect();
+                    if (r.bottom < 0 || r.top > vh) return;
+                    const off = r.top + r.height / 2 - vh / 2;
+                    s.style.setProperty('--wy', clamp(off * -0.1, -70, 70).toFixed(1) + 'px');
+                    s.style.setProperty('--wx', clamp(off * 0.05, -50, 50).toFixed(1) + 'px');
+                });
             }
             function schedule() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
             window.addEventListener('scroll', schedule, { passive: true });
@@ -731,7 +718,8 @@
 
             // Pochylenie 3D (rotate wokół osi wyznaczonej pozycją kursora)
             if (fine && !reduce) {
-                document.querySelectorAll('.service-box, .project-card, .pillar-box').forEach(card => {
+                document.querySelectorAll('.service-box, .pillar-box').forEach(card => {
+                    card.addEventListener('pointerenter', () => { card.style.transitionDelay = '0s'; });
                     card.addEventListener('pointermove', e => {
                         if (!body.classList.contains('depth-tilt')) return;
                         const r = card.getBoundingClientRect();
@@ -744,6 +732,14 @@
                 });
             }
         })();
+    </script>
+    <script>
+        // Galeria: zdjęcia pojawiają się płynnie po załadowaniu (placeholder z animacją do tego czasu)
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            const done = () => img.classList.add('is-loaded');
+            if (img.complete && img.naturalWidth) done();
+            else { img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true }); }
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
