@@ -1201,7 +1201,7 @@ body.depth-sheets #about { position: relative; }
 
 @media (max-width: 768px) {
     body.depth-sheets :is(#services, #projects, #gallery, #contact) { margin-top: -28px; border-radius: 28px 28px 0 0; }
-    body.depth-words [data-depth-word]::before { font-size: clamp(36px, 12vw, 90px); top: -0.3em; left: 0; }
+    body.depth-words [data-depth-word]::before { font-size: clamp(36px, 12vw, 90px); top: -1em; left: auto; right: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

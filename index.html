@@ -685,7 +685,7 @@
                     const r = s.getBoundingClientRect();
                     if (r.bottom < -200 || r.top > vh + 200) return;
                     const off = r.top + r.height / 2 - vh / 2;
-                    const k = window.innerWidth <= 768 ? 0.3 : 1;
+                    const k = window.innerWidth <= 768 ? 0 : 1;
                     s.style.setProperty('--wy', (clamp(off * -0.1, -70, 70) * k).toFixed(1) + 'px');
                     s.style.setProperty('--wx', (clamp(off * 0.05, -50, 50) * k).toFixed(1) + 'px');
                 });
