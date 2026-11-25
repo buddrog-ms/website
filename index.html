@@ -635,6 +635,100 @@
         </div>
     </footer>
 
+    <!-- PODGLĄD: 4 warianty sekcji Usługi na telefonie (do usunięcia po wyborze). Warianty 2-4 to kopie #services budowane skryptem (bez duplikatów id). -->
+    <script>
+        (function () {
+            const base = document.getElementById('services');
+            if (!base) return;
+            const labels = {
+                1: 'Wariant 1 – niższe karty + „Pokaż wszystkie”',
+                2: 'Wariant 2 – siatka 2 kolumny',
+                3: 'Wariant 3 – karuzela (przesuń w bok)',
+                4: 'Wariant 4 – kompaktowa lista (akordeon)'
+            };
+            const addLabel = (section, n) => {
+                const head = section.querySelector('.section-head');
+                const tag = document.createElement('span');
+                tag.className = 'services-preview-label';
+                tag.textContent = labels[n];
+                head.insertBefore(tag, head.firstChild);
+            };
+
+            // Wariant 1: oryginalna sekcja, niższe karty, na telefonie 4 widoczne + przycisk
+            base.classList.add('services-v1', 'is-collapsed');
+            addLabel(base, 1);
+            const grid1 = base.querySelector('.services-grid');
+            const more = document.createElement('button');
+            more.type = 'button';
+            more.className = 'services-more-btn';
+            more.setAttribute('aria-expanded', 'false');
+            more.textContent = 'Pokaż wszystkie usługi (11)';
+            more.addEventListener('click', () => {
+                const open = base.classList.toggle('is-collapsed') === false;
+                more.setAttribute('aria-expanded', String(open));
+                more.textContent = open ? 'Zwiń listę usług' : 'Pokaż wszystkie usługi (11)';
+            });
+            grid1.insertAdjacentElement('afterend', more);
+
+            // Warianty 2-4: kopie sekcji bez atrybutów id
+            let anchor = base;
+            [2, 3, 4].forEach(n => {
+                const copy = base.cloneNode(true);
+                copy.removeAttribute('id');
+                copy.id = 'services-v' + n;
+                copy.classList.remove('services-v1', 'is-collapsed');
+                copy.classList.add('services-v' + n, 'services-preview');
+                copy.querySelectorAll('[id]').forEach(el => { if (el !== copy) el.removeAttribute('id'); });
+                const btn = copy.querySelector('.services-more-btn'); if (btn) btn.remove();
+                const oldLabel = copy.querySelector('.services-preview-label'); if (oldLabel) oldLabel.remove();
+                addLabel(copy, n);
+                anchor.insertAdjacentElement('afterend', copy);
+                anchor = copy;
+            });
+
+            // Wariant 2 i 4: dotknięcie rozwija opis
+            const v2 = document.getElementById('services-v2');
+            v2.querySelectorAll('.service-box').forEach(box => {
+                box.addEventListener('click', () => box.classList.toggle('is-expanded'));
+            });
+            const v4 = document.getElementById('services-v4');
+            const rows = v4.querySelectorAll('.service-box');
+            rows.forEach((box, i) => {
+                box.setAttribute('role', 'button');
+                box.setAttribute('tabindex', '0');
+                box.setAttribute('aria-expanded', i === 0 ? 'true' : 'false');
+                if (i === 0) box.classList.add('is-open');
+                const toggle = () => {
+                    const open = box.classList.toggle('is-open');
+                    box.setAttribute('aria-expanded', String(open));
+                };
+                box.addEventListener('click', toggle);
+                box.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+            });
+
+            // Wariant 3: licznik i strzałki karuzeli
+            const v3 = document.getElementById('services-v3');
+            const track = v3.querySelector('.services-grid');
+            const cards = track.querySelectorAll('.service-box');
+            const controls = document.createElement('div');
+            controls.className = 'services-carousel-controls';
+            controls.innerHTML = '<button type="button" class="services-carousel-btn" data-dir="-1" aria-label="Poprzednia usługa">&#8249;</button>' +
+                '<span class="services-carousel-count">1 / ' + cards.length + '</span>' +
+                '<button type="button" class="services-carousel-btn" data-dir="1" aria-label="Następna usługa">&#8250;</button>';
+            track.insertAdjacentElement('afterend', controls);
+            const count = controls.querySelector('.services-carousel-count');
+            const step = () => cards[0].getBoundingClientRect().width + 14;
+            const update = () => {
+                const i = Math.min(cards.length - 1, Math.max(0, Math.round(track.scrollLeft / step())));
+                count.textContent = (i + 1) + ' / ' + cards.length;
+            };
+            track.addEventListener('scroll', update, { passive: true });
+            controls.addEventListener('click', e => {
+                const b = e.target.closest('.services-carousel-btn');
+                if (b) track.scrollBy({ left: Number(b.dataset.dir) * step(), behavior: 'smooth' });
+            });
+        })();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
