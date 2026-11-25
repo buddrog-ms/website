@@ -657,6 +657,47 @@
             }
         })();
     </script>
+
+    <!-- Realizacje: zwijana lista (pierwsze karty + przycisk) i zwijane opisy -->
+    <script>
+        (function () {
+            const base = document.getElementById('projects');
+            if (!base) return;
+            const grid = base.querySelector('.projects-grid');
+            const cards = Array.from(grid.querySelectorAll('.project-card'));
+
+            cards.forEach(card => {
+                const desc = card.querySelector('.project-description');
+                if (!desc) return;
+                const toggle = document.createElement('button');
+                toggle.type = 'button';
+                toggle.className = 'project-desc-toggle';
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.innerHTML = '<span>Pokaż opis</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+                toggle.addEventListener('click', () => {
+                    const open = card.classList.toggle('is-desc-open');
+                    toggle.setAttribute('aria-expanded', String(open));
+                    toggle.firstElementChild.textContent = open ? 'Ukryj opis' : 'Pokaż opis';
+                });
+                desc.insertAdjacentElement('beforebegin', toggle);
+            });
+
+            base.classList.add('is-collapsed');
+            const more = document.createElement('button');
+            more.type = 'button';
+            more.className = 'projects-more-btn';
+            more.setAttribute('aria-expanded', 'false');
+            const labelClosed = 'Pokaż wszystkie realizacje (' + cards.length + ')';
+            more.textContent = labelClosed;
+            more.addEventListener('click', () => {
+                const open = base.classList.toggle('is-collapsed') === false;
+                more.setAttribute('aria-expanded', String(open));
+                more.textContent = open ? 'Zwiń listę realizacji' : labelClosed;
+                if (open) cards.forEach(c => c.classList.add('is-visible'));
+            });
+            grid.insertAdjacentElement('afterend', more);
+        })();
+    </script>
     <!-- Efekty głębi: cienie, pochylenie 3D kart, napisy w tle, nakładające się sekcje -->
     <script>
         (function () {
@@ -675,6 +716,26 @@
 
             // Napisy w tle: powolny dryf względem treści (jedna pętla rAF przy scrollu)
             const wordHeads = Array.from(document.querySelectorAll('[data-depth-word]'));
+
+            // Pozycja pozioma napisu (telefon) liczona z długości napisu i tytułu: krótki tytuł -> napis przy lewej, długi tytuł -> bliżej środka
+            const measureCtx = document.createElement('canvas').getContext('2d');
+            function placeWords() {
+                wordHeads.forEach(h => {
+                    const cs = getComputedStyle(h, '::before');
+                    const size = parseFloat(cs.fontSize);
+                    const word = h.getAttribute('data-depth-word');
+                    measureCtx.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+                    const wordW = measureCtx.measureText(word).width - size * 0.03 * word.length;
+                    const range = document.createRange();
+                    range.selectNodeContents(h);
+                    const titleW = range.getBoundingClientRect().width;
+                    const free = Math.max(0, h.clientWidth - wordW);
+                    h.style.setProperty('--wl', (free * Math.min(1, titleW / h.clientWidth)).toFixed(1) + 'px');
+                });
+            }
+            placeWords();
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeWords);
+            window.addEventListener('resize', placeWords);
             let ticking = false;
             const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
             function update() {
