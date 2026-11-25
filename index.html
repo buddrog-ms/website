@@ -85,6 +85,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
 
     <!-- ===== ZMIEŃ TUTAJ ===== -->
     <script>
@@ -516,6 +517,12 @@
             </div>
         </section>
 
+        <!-- PODGLĄD: pasek realizacji (marquee) -->
+        <section class="alive-marquee" id="alive-marquee" aria-label="Przegląd realizacji">
+            <div class="container"><span class="alive-badge">Podgląd – pasek realizacji (przesuwa się sam, dotknij żeby zatrzymać)</span></div>
+            <div class="marquee-viewport"><div class="marquee-track" id="marqueeTrack"></div></div>
+        </section>
+
         <!-- Gallery -->
         <section class="section section-alt" id="gallery">
             <div class="container">
@@ -568,6 +575,79 @@
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
                 </div>
+            </div>
+        </section>
+
+        <!-- PODGLĄD (DEMO): przed i po -->
+        <section class="section section-light" id="before-after">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="alive-badge">DEMO – przykładowe zdjęcia z galerii, to nie jest prawdziwa para przed/po</span>
+                    <span class="eyebrow">Efekty</span>
+                    <h2>Przed i po</h2>
+                    <p class="section-intro">Przesuń suwak, aby porównać stan przed i po wykonaniu prac.</p>
+                </div>
+                <div class="ba-grid">
+                    <figure class="ba-compare reveal" style="--pos:50%">
+                        <img class="ba-after" src="assets/images/gallery/project6/1200w.jpg" alt="Po pracach (DEMO)" loading="lazy" decoding="async">
+                        <div class="ba-before-wrap"><img class="ba-before" src="assets/images/gallery/project7/1200w.jpg" alt="Przed pracami (DEMO)" loading="lazy" decoding="async"></div>
+                        <span class="ba-tag ba-tag-before">Przed</span><span class="ba-tag ba-tag-after">Po</span>
+                        <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Porównaj przed i po (przykład 1)">
+                        <span class="ba-handle" aria-hidden="true"></span>
+                    </figure>
+                    <figure class="ba-compare reveal" style="--pos:50%">
+                        <img class="ba-after" src="assets/images/gallery/project14/1200w.jpg" alt="Po pracach (DEMO)" loading="lazy" decoding="async">
+                        <div class="ba-before-wrap"><img class="ba-before" src="assets/images/gallery/project15/1200w.jpg" alt="Przed pracami (DEMO)" loading="lazy" decoding="async"></div>
+                        <span class="ba-tag ba-tag-before">Przed</span><span class="ba-tag ba-tag-after">Po</span>
+                        <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Porównaj przed i po (przykład 2)">
+                        <span class="ba-handle" aria-hidden="true"></span>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+        <!-- PODGLĄD (DEMO): mapa realizacji -->
+        <section class="section section-dark" id="map-realizations">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="alive-badge">DEMO – punkty przykładowe, to nie są prawdziwe realizacje</span>
+                    <span class="eyebrow eyebrow-light">Zasięg</span>
+                    <h2>Gdzie pracujemy</h2>
+                    <p class="section-intro section-intro-light">Siedziba firmy w Bolesławiu i przykładowe miejsca prac w okolicy.</p>
+                </div>
+                <div class="realizations-map" id="realizationsMap" role="region" aria-label="Mapa przykładowych realizacji (DEMO)"></div>
+            </div>
+        </section>
+
+        <!-- PODGLĄD (DEMO): opinie klientów -->
+        <section class="section section-alt" id="testimonials">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="alive-badge">DEMO – wymyślone cytaty, nie są prawdziwymi opiniami klientów</span>
+                    <span class="eyebrow">Opinie</span>
+                    <h2>Co mówią klienci</h2>
+                </div>
+                <div class="testimonials" aria-roledescription="karuzela" aria-label="Opinie klientów (DEMO)">
+                    <blockquote class="testimonial is-active"><p>„Prace wykonane terminowo i zgodnie z ustaleniami. Polecam.”</p><footer>Klient A (DEMO)</footer></blockquote>
+                    <blockquote class="testimonial"><p>„Sprawna ekipa i dobry kontakt na każdym etapie budowy.”</p><footer>Klient B (DEMO)</footer></blockquote>
+                    <blockquote class="testimonial"><p>„Solidnie, bezpiecznie i w rozsądnej cenie.”</p><footer>Klient C (DEMO)</footer></blockquote>
+                    <div class="testimonial-controls">
+                        <button type="button" class="testimonial-btn" data-dir="-1" aria-label="Poprzednia opinia">&#8249;</button>
+                        <span class="testimonial-dots"></span>
+                        <button type="button" class="testimonial-btn" data-dir="1" aria-label="Następna opinia">&#8250;</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PODGLĄD: pas Ken Burns + parallax -->
+        <section class="alive-band" id="alive-band">
+            <div class="alive-band-bg" style="background-image:url('assets/images/gallery/project2/1920w.webp')"></div>
+            <div class="alive-band-overlay"></div>
+            <div class="container alive-band-content">
+                <span class="alive-badge">Podgląd – pas z powolnym zoomem i parallaxem</span>
+                <h2>Solidnie, bezpiecznie i w przystępnej cenie</h2>
+                <a href="#contact" class="btn btn-primary">Skontaktuj się</a>
             </div>
         </section>
 
@@ -727,6 +807,118 @@
                 const b = e.target.closest('.services-carousel-btn');
                 if (b) track.scrollBy({ left: Number(b.dataset.dir) * step(), behavior: 'smooth' });
             });
+        })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- PODGLĄD: strona bardziej żywa (marquee, przed/po, mapa DEMO, opinie DEMO, parallax, wejścia kart) -->
+    <script>
+        (function () {
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Marquee: 12 miniatur + kopia (nieme, kliknięcie otwiera oryginał w lightboxie)
+            const track = document.getElementById('marqueeTrack');
+            if (track) {
+                const ids = [1, 5, 9, 13, 17, 21, 25, 29, 33, 3, 7, 11];
+                const make = (n, isCopy) => {
+                    const a = document.createElement('a');
+                    a.className = 'marquee-item' + (isCopy ? '' : ' glightbox');
+                    a.href = 'assets/images/gallery/project' + n + '/1920w.webp';
+                    if (!isCopy) a.setAttribute('data-gallery', 'marquee');
+                    a.setAttribute('aria-label', 'Powiększ zdjęcie ' + n);
+                    a.innerHTML = '<img src="assets/images/gallery/project' + n + '/600w.webp" alt="Realizacja Mar-Buddróg – zdjęcie ' + n + '" loading="lazy" decoding="async" draggable="false">';
+                    if (isCopy) {
+                        a.setAttribute('aria-hidden', 'true');
+                        a.tabIndex = -1;
+                        a.addEventListener('click', e => {
+                            e.preventDefault();
+                            const orig = track.querySelector('.glightbox[href$="project' + n + '/1920w.webp"]');
+                            if (orig) orig.click();
+                        });
+                    }
+                    return a;
+                };
+                ids.forEach(n => track.appendChild(make(n, false)));
+                ids.forEach(n => track.appendChild(make(n, true)));
+                const wrap = document.getElementById('alive-marquee');
+                wrap.addEventListener('touchstart', () => wrap.classList.add('is-paused'), { passive: true });
+                wrap.addEventListener('touchend', () => setTimeout(() => wrap.classList.remove('is-paused'), 4000), { passive: true });
+            }
+
+            // Przed/po: zmienna --pos z suwaka
+            document.querySelectorAll('.ba-compare').forEach(fig => {
+                const range = fig.querySelector('.ba-range');
+                range.addEventListener('input', () => fig.style.setProperty('--pos', range.value + '%'));
+            });
+
+            // Opinie DEMO: automatyczna zmiana, pauza na hover/focus/dotyk
+            const tBox = document.querySelector('.testimonials');
+            if (tBox) {
+                const items = Array.from(tBox.querySelectorAll('.testimonial'));
+                const dotsBox = tBox.querySelector('.testimonial-dots');
+                let cur = 0, paused = false;
+                const dots = items.map((_, i) => {
+                    const d = document.createElement('button');
+                    d.type = 'button'; d.className = 'testimonial-dot';
+                    d.setAttribute('aria-label', 'Opinia ' + (i + 1));
+                    d.addEventListener('click', () => show(i));
+                    dotsBox.appendChild(d);
+                    return d;
+                });
+                function show(i) {
+                    cur = (i + items.length) % items.length;
+                    items.forEach((it, k) => it.classList.toggle('is-active', k === cur));
+                    dots.forEach((d, k) => d.classList.toggle('is-active', k === cur));
+                }
+                tBox.querySelectorAll('.testimonial-btn').forEach(b => b.addEventListener('click', () => show(cur + Number(b.dataset.dir))));
+                ['mouseenter', 'focusin', 'touchstart'].forEach(ev => tBox.addEventListener(ev, () => { paused = true; }, { passive: true }));
+                ['mouseleave', 'focusout'].forEach(ev => tBox.addEventListener(ev, () => { paused = false; }));
+                tBox.addEventListener('touchend', () => setTimeout(() => { paused = false; }, 6000), { passive: true });
+                show(0);
+                if (!reduce) setInterval(() => { if (!paused && !document.hidden) show(cur + 1); }, 6000);
+            }
+
+            // Parallax pasa Ken Burns (zmienna --parallax)
+            const band = document.getElementById('alive-band');
+            if (band && !reduce) {
+                const bg = band.querySelector('.alive-band-bg');
+                let ticking = false;
+                const upd = () => {
+                    ticking = false;
+                    const r = band.getBoundingClientRect();
+                    if (r.bottom < 0 || r.top > window.innerHeight) return;
+                    const p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
+                    bg.style.setProperty('--parallax', (p * -60).toFixed(1) + 'px');
+                };
+                window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
+                upd();
+            }
+
+            // Mapa DEMO: Leaflet inicjowany dopiero po wejściu sekcji w widok
+            const mapEl = document.getElementById('realizationsMap');
+            if (mapEl && window.L) {
+                const initMap = () => {
+                    const map = L.map(mapEl, { scrollWheelZoom: false }).setView([50.2881343, 20.9282717], 10);
+                    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 18,
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                    }).addTo(map);
+                    const pin = (lat, lng, title, img) => L.marker([lat, lng]).addTo(map).bindPopup(
+                        '<img src="assets/images/gallery/' + img + '/600w.jpg" alt="">' + title + '<br><em>DEMO – punkt przykładowy, nie jest prawdziwą realizacją</em>');
+                    pin(50.2881343, 20.9282717, 'Bolesław – siedziba firmy Mar-Buddróg', 'project1');
+                    pin(50.1744, 20.9847, 'Dąbrowa Tarnowska (DEMO)', 'project3');
+                    pin(50.0121, 20.9858, 'Tarnów (DEMO)', 'project5');
+                    setTimeout(() => map.invalidateSize(), 200);
+                };
+                if ('IntersectionObserver' in window) {
+                    const mo = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { mo.disconnect(); initMap(); } }, { rootMargin: '300px' });
+                    mo.observe(mapEl);
+                } else initMap();
+            }
+
+            // Zróżnicowane wejścia kart (klasy przed inicjalizacją obserwatora reveal)
+            document.querySelectorAll('.service-box.reveal').forEach((el, i) => el.classList.add(['reveal-left', 'reveal-zoom', 'reveal-right'][i % 3]));
+            document.querySelectorAll('.pillar-box.reveal').forEach((el, i) => el.classList.add(i % 2 ? 'reveal-right' : 'reveal-left'));
+            document.querySelectorAll('.project-card.reveal').forEach((el, i) => el.classList.add(i % 2 ? 'reveal-right' : 'reveal-left'));
         })();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
@@ -965,6 +1157,8 @@
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('is-visible');
+                            // po wejściu zdejmujemy opóźnienie, żeby efekty hover reagowały od razu
+                            setTimeout(() => { entry.target.style.transitionDelay = ''; }, 1400);
                             revealObserver.unobserve(entry.target);
                         }
                     });
