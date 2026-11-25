@@ -1046,7 +1046,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
     .navbar-inner { min-height: 64px; }
     .navbar { background-color: rgba(15,18,21,0.88); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
 
-    .hamburger { display: flex; }
+    .hamburger { display: flex; margin-left: auto; margin-right: -8px; }
 
     .nav-menu {
         display: none;
@@ -1201,7 +1201,7 @@ body.depth-sheets #about { position: relative; }
 
 @media (max-width: 768px) {
     body.depth-sheets :is(#services, #projects, #gallery, #contact) { margin-top: -28px; border-radius: 28px 28px 0 0; }
-    body.depth-words [data-depth-word]::before { font-size: clamp(44px, 15vw, 90px); }
+    body.depth-words [data-depth-word]::before { font-size: clamp(36px, 12vw, 90px); top: -0.3em; left: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
