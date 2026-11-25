@@ -682,12 +682,12 @@
                 if (reduce || !body.classList.contains('depth-words')) return;
                 const vh = window.innerHeight;
                 wordHeads.forEach(s => {
-                    const sec = s.closest('section') || s;
-                    const r = sec.getBoundingClientRect();
-                    if (r.bottom < 0 || r.top > vh) return;
+                    const r = s.getBoundingClientRect();
+                    if (r.bottom < -200 || r.top > vh + 200) return;
                     const off = r.top + r.height / 2 - vh / 2;
-                    s.style.setProperty('--wy', clamp(off * -0.1, -70, 70).toFixed(1) + 'px');
-                    s.style.setProperty('--wx', clamp(off * 0.05, -50, 50).toFixed(1) + 'px');
+                    const k = window.innerWidth <= 768 ? 0.3 : 1;
+                    s.style.setProperty('--wy', (clamp(off * -0.1, -70, 70) * k).toFixed(1) + 'px');
+                    s.style.setProperty('--wx', (clamp(off * 0.05, -50, 50) * k).toFixed(1) + 'px');
                 });
             }
             function schedule() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
