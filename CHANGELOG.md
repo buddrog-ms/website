@@ -38,6 +38,9 @@ Stara strona miała osobne podstrony realizacji. Nowa jest jednostronicowa, wię
 
 Nie ma też starych katalogów zdjęć (`images/gallery/...`, `images/realizations/...`) ani ikony `images/icons/excavator-logo.png` (celowo pominięta). Starego górnego paska (topbar) z telefonem i mailem też nie ma - dane są w nawigacji i sekcji Kontakt.
 
+## PODGLĄD (nie publikować): strona bardziej żywa
+W `index.html` / `style.css` dodano sekcje i efekty do oceny. Elementy oznaczone żółtą plakietką „DEMO / PODGLĄD” to przykłady: pasek realizacji (marquee), przed/po (zdjęcia z galerii, nie prawdziwa para), mapa Leaflet + OpenStreetMap (pinezki przykładowe), opinie (wymyślone cytaty), pas z Ken Burns i parallax. Dodatkowo: zróżnicowane wejścia kart (`reveal-left/right/zoom`) i mikrointerakcje (hover). Przed publikacją usunąć lub zastąpić treści DEMO prawdziwymi (opinie, przed/po, pinezki) oraz plakietki `.alive-badge`; nie dodawać znaczników Review/AggregateRating dla treści DEMO.
+
 ## Checklista przy podmianie strony na hostingu
 1. Zrób kopię zapasową obecnej strony z serwera.
 2. Wdrożenie na cPanel robi `.cpanel.yml` po wypchnięciu na gałąź `production` (kopiuje `index.html`, `style.css`, `robots.txt`, `sitemap.xml`, `.htaccess`, `assets/`, `.well-known/`; katalog `_archive/` nie jest kopiowany). Po tej zmianie struktury na hostingu zostaje stary, już nieużywany katalog `images/` - można go usunąć ręcznie. Przy ręcznym wgraniu pamiętaj o ukrytym pliku `.htaccess` (część klientów FTP go pomija).
