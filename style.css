@@ -703,7 +703,7 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.15; }
 
 .project-dot.is-active { background: var(--yellow); transform: scale(1.3); }
 
-.project-card-content { padding: 28px; }
+.project-card-content { padding: 28px; cursor: pointer; }
 
 .project-scope {
     display: flex;
